@@ -464,7 +464,7 @@ header h1,header p{text-shadow:0 1px 10px rgba(0,0,0,.45)}
 
 <header>
 <h1>📚 مصمم البحوث المدرسية الذكي</h1>
-<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٦)</span></p>
+<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٧)</span></p>
 <div class="row" style="margin-top:10px"><span class="note">🎨 ألوان الواجهة:</span><select id="uiTheme" style="width:auto"><option value="green">أخضر</option><option value="blue">أزرق</option><option value="purple">بنفسجي</option><option value="orange">برتقالي</option><option value="slate">رمادي</option></select><label class="note" style="margin:0;display:flex;gap:6px;align-items:center"><input type="checkbox" id="animToggle" style="width:auto"> 🌀 خلفية متحركة</label></div>
 </header>
 <main>
@@ -1067,32 +1067,44 @@ $('colorSel').onchange=()=>{showDesc();if(lastData)renderAny(lastData,TOBJ(curTh
 $('customColor').oninput=()=>{if(lastData)renderAny(lastData,TOBJ(curTheme))};
 hiLightModes();showDesc();
 (()=>{
-  const CLIPS=['bg1.mp4','bg2.mp4','bg3.mp4','bg4.mp4','bg5.mp4','bg6.mp4','bg10.mp4','bg11.mp4'];
-  const TALL=['bg1','bg2','bg6']; // عمودية: تظهر كاملة مع خلفية مموّهة على الجنبين
   const MIN=15,MAX=20; // كل مقطع يظهر من 15 إلى 20 ثانية، بالترتيب
+  const FALLBACK=['bg1.mp4','bg2.mp4','bg3.mp4','bg4.mp4','bg5.mp4','bg6.mp4','bg10.mp4','bg11.mp4'];
   const slots=[...document.querySelectorAll('#animBg .bgslot')];
   if(!slots.length)return;
-  let cur=-1,last=-1;
-  let idx=-1;
-  const pick=()=>{idx=(idx+1)%CLIPS.length;return CLIPS[idx]}; // بالترتيب: bg1 ثم bg2 ... ثم يعود لـ bg1
+  // يكتشف تلقائياً أي مقطع bgN.mp4 موجود بجانب الصفحة (حتى رقم 60)، فتضيف أي مقطع جديد بنفس الاسم
+  async function exists(url){try{const r=await fetch(url,{method:'HEAD',cache:'no-store'});return r.ok}catch(e){return null}}
+  async function discover(){
+    const nums=[...Array(60).keys()].map(i=>i+1);
+    const res=await Promise.all(nums.map(n=>exists(`bg${n}.mp4`)));
+    if(res.every(r=>r===null))return FALLBACK; // الفتح من جهاز بدون إنترنت: نستخدم القائمة الثابتة
+    const list=nums.filter((n,i)=>res[i]===true).map(n=>`bg${n}.mp4`);
+    return list.length?list:FALLBACK;
+  }
+  let order=[],idx=-1,cur=-1;
+  const pick=()=>{idx=(idx+1)%order.length;return order[idx]}; // بالترتيب، ثم يرجع للأول
   function load(v,name){
     v.onerror=()=>{if((v.getAttribute('src')||'').endsWith('.webm')){v.src=name;v.play().catch(()=>{})}};
-    v.loop=true; // إذا كان المقطع أقصر من 15 ثانية يعيد نفسه حتى تنتهي المدة
+    v.loop=true; // إذا كان المقطع أقصر من المدة يعيد نفسه
     v.src=name.replace(/\.mp4$/,'.webm');
     v.play().catch(()=>{});
   }
   function show(){
     const next=cur===0?1:0,slot=slots[next],old=cur>=0?slots[cur]:null;
     const name=pick();
-    slot.classList.toggle('tall',TALL.includes(name.replace('.mp4','')));
-    load(slot.querySelector('.bgfill'),name);
-    load(slot.querySelector('.bgv'),name);
+    const main=slot.querySelector('.bgv'),fill=slot.querySelector('.bgfill');
+    // المقطع العمودي يظهر كامل مع خلفية مموّهة، والأفقي يملأ الشاشة (يُحسب تلقائياً من أبعاد الفيديو)
+    main.onloadedmetadata=()=>slot.classList.toggle('tall',main.videoHeight>main.videoWidth);
+    load(fill,name);
+    load(main,name);
     slot.classList.add('on');
-    if(old){old.classList.remove('on');setTimeout(()=>{old.querySelectorAll('video').forEach(v=>v.pause())},1300)}
+    if(old){old.classList.remove('on');setTimeout(()=>old.querySelectorAll('video').forEach(v=>v.pause()),1300)}
     cur=next;
     $('animBg').classList.add('has-clips');
   }
-  (function next(){show();setTimeout(next,(MIN+Math.random()*(MAX-MIN))*1000)})();
+  discover().then(list=>{
+    order=list;
+    (function next(){show();setTimeout(next,(MIN+Math.random()*(MAX-MIN))*1000)})();
+  });
 })();
 (()=>{let on=true;try{on=(localStorage.getItem('research_anim_v1')??'1')==='1'}catch(e){}
 $('animToggle').checked=on;document.documentElement.classList.toggle('no-anim',!on);
