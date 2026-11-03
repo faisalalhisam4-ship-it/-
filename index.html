@@ -464,7 +464,7 @@ header h1,header p{text-shadow:0 1px 10px rgba(0,0,0,.45)}
 
 <header>
 <h1>📚 مصمم البحوث المدرسية الذكي</h1>
-<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٥)</span></p>
+<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٦)</span></p>
 <div class="row" style="margin-top:10px"><span class="note">🎨 ألوان الواجهة:</span><select id="uiTheme" style="width:auto"><option value="green">أخضر</option><option value="blue">أزرق</option><option value="purple">بنفسجي</option><option value="orange">برتقالي</option><option value="slate">رمادي</option></select><label class="note" style="margin:0;display:flex;gap:6px;align-items:center"><input type="checkbox" id="animToggle" style="width:auto"> 🌀 خلفية متحركة</label></div>
 </header>
 <main>
@@ -1067,8 +1067,8 @@ $('colorSel').onchange=()=>{showDesc();if(lastData)renderAny(lastData,TOBJ(curTh
 $('customColor').oninput=()=>{if(lastData)renderAny(lastData,TOBJ(curTheme))};
 hiLightModes();showDesc();
 (()=>{
-  const CLIPS=['bg1.mp4','bg2.mp4','bg3.mp4','bg4.mp4','bg5.mp4','bg6.mp4','bg7.mp4','bg8.mp4','bg9.mp4'];
-  const TALL=['bg1','bg2','bg6','bg7','bg8','bg9']; // عمودية: تظهر كاملة مع خلفية مموّهة على الجنبين
+  const CLIPS=['bg1.mp4','bg2.mp4','bg3.mp4','bg4.mp4','bg5.mp4','bg6.mp4','bg10.mp4','bg11.mp4'];
+  const TALL=['bg1','bg2','bg6']; // عمودية: تظهر كاملة مع خلفية مموّهة على الجنبين
   const MIN=15,MAX=20; // كل مقطع يظهر من 15 إلى 20 ثانية، بالترتيب
   const slots=[...document.querySelectorAll('#animBg .bgslot')];
   if(!slots.length)return;
