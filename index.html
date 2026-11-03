@@ -464,7 +464,7 @@ header h1,header p{text-shadow:0 1px 10px rgba(0,0,0,.45)}
 
 <header>
 <h1>📚 مصمم البحوث المدرسية الذكي</h1>
-<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٧)</span></p>
+<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٨)</span></p>
 <div class="row" style="margin-top:10px"><span class="note">🎨 ألوان الواجهة:</span><select id="uiTheme" style="width:auto"><option value="green">أخضر</option><option value="blue">أزرق</option><option value="purple">بنفسجي</option><option value="orange">برتقالي</option><option value="slate">رمادي</option></select><label class="note" style="margin:0;display:flex;gap:6px;align-items:center"><input type="checkbox" id="animToggle" style="width:auto"> 🌀 خلفية متحركة</label></div>
 </header>
 <main>
@@ -495,7 +495,7 @@ header h1,header p{text-shadow:0 1px 10px rgba(0,0,0,.45)}
 <div><label>الألوان</label><select id="colorSel"><option value="design" selected>كما في التصميم</option><option value="أخضر زمردي">أخضر زمردي</option><option value="أزرق ملكي">أزرق ملكي</option><option value="أزرق سماوي">أزرق سماوي</option><option value="تركوازي">تركوازي</option><option value="بنفسجي">بنفسجي</option><option value="نيلي">نيلي</option><option value="عنابي">عنابي</option><option value="وردي">وردي</option><option value="برتقالي">برتقالي</option><option value="ذهبي">ذهبي</option><option value="زيتي">زيتي</option><option value="رمادي فحمي">رمادي فحمي</option><option value="بني قهوة">بني قهوة</option><option value="custom">لون مخصص</option></select></div>
 <div id="customBox" style="display:none"><label>اختر اللون</label><input type="color" id="customColor" value="#0b6b4a" style="height:44px;padding:4px"></div>
 <div class="full"><div id="themeDesc" style="font-size:14px;color:var(--mute);line-height:1.8;white-space:pre-line;margin-top:-2px"></div></div>
-<div><label>الصور (من نفس الموضوع)</label><select id="imgs"><option value="none">بدون صور</option><option value="few">قليلة (٣)</option><option value="mid" selected>متوسطة (٦)</option><option value="many">كثيرة (١٠)</option></select></div>
+<div><label>الصور (من نفس الموضوع)</label><select id="imgs"><option value="none">بدون صور</option><option value="few">قليلة (٣)</option><option value="mid" selected>متوسطة (٦)</option><option value="many">كثيرة (١٠)</option><option value="custom">📏 عدد تحدده</option></select><input id="nImgs" type="number" min="1" max="30" value="8" style="display:none;margin-top:6px"></div>
 <div class="full"><label id="topicLbl">موضوع البحث</label><input id="topic" placeholder="مثال: العناصر والمركبات وتطبيقها في الكيمياء"></div>
 
 <div class="full ai-box">
@@ -568,6 +568,7 @@ const THEMES=[
 {n:"معدن",pc:"#4b5563",pl:"#dfe3e8",pl2:"#f3f5f7",c:"b",h:"h-slant",b:"bggrid",f:"'Changa',sans-serif",bf:"'Almarai',Tahoma,sans-serif"},
 {n:"شفق",pc:"#b84a62",pl:"#f5d6dd",pl2:"#fdf0f3",c:"i",h:"h-bar",b:"bgt",f:"'El Messiri',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"}
 ];
+function imgCount(){const v=$('imgs').value;if(v==='custom')return Math.max(0,Math.min(30,parseInt($('nImgs').value)||0));return {none:0,few:3,mid:6,many:10}[v]||0}
 const DESCS={"أزرق ملكي":"أزرق عميق مع عناوين بشريط جانبي، مناسب للعلوم والرياضيات","زمردي فاخر":"أخضر زمردي بأغلفة أنيقة، مناسب للبحوث الشاملة","ليلي وذهبي":"خلفية ليلية بلمسات ذهبية، مناسب للتاريخ والأدب","تركواز هادئ":"تركواز ناعم وعناوين عصرية، مناسب للتقنية والبيئة","عنابي ملكي":"عنابي غامق بعناوين ممتلئة، مناسب للعلوم الإنسانية","بنفسجي مخملي":"بنفسجي هادئ بخلفيات دائرية، مناسب للغة العربية","أزرق محيطي":"أزرق بحري بخطوط مرسومة، مناسب للجغرافيا","زيتوني راقٍ":"زيتوني دافئ يشبه الكتب القديمة، مناسب للتاريخ والدراسات الإسلامية","طوبي دافئ":"طوبي ترابي بعناوين شريطية، مناسب للمواد الاجتماعية","فضي وفحمي":"رمادي معدني بمظهر حديث، مناسب للرياضيات والتقنية","وردي ناعم":"وردي هادئ وخطوط رقيقة، مناسب للمرحلة المتوسطة والابتدائية","أزرق سماوي":"أزرق فاتح منعش، مناسب للإنجليزية والعلوم","قهوة وكريمي":"بني كريمي دافئ، مناسب للمقالات الطويلة","أخضر غابة":"أخضر داكن بحدود سميكة، مناسب للأحياء وعلم البيئة","نحاسي أنيق":"نحاسي بإطار مزدوج، مناسب للفيزياء والكيمياء","نيلي كلاسيكي":"نيلي عميق بأغلفة رسمية، مناسب للبحوث الرسمية","برقوقي":"برقوقي بتدرج ناعم، مناسب للفنون واللغة","رملي صحراوي":"رملي وبرتقالي خفيف، مناسب للجغرافيا والبيئة الصحراوية","فحمي فاخر":"أسود فحمي بلمسة ذهبية، مناسب للعروض الرسمية","ياقوتي":"أحمر ياقوتي جريء، مناسب للمواد التي تحتاج لفت الانتباه","حبر وورق":"حبر أسود على ورق كريمي، أقرب لكراسة مكتوبة يدوياً","شمس الأصيل":"أصفر ذهبي دافئ، مناسب للعروض المدرسية المرحة","بحر عميق":"أزرق داكن بخلفية متدرجة، مناسب للعروض الجريئة","ورد الرمال":"وردي ترابي بأغلفة دائرية، مناسب للمواد الإنسانية","ياسمين":"أخضر فاتح ناعم، مناسب للمرحلة الابتدائية","ليلك":"بنفسجي فاتح بعناوين مستديرة، مناسب للمواد الأدبية","معدن":"رمادي معدني بخطوط حادة، مناسب للتقنية والحاسب","شفق":"وردي شفقي بعناوين شريطية، مناسب للتعبير والفنون"};
 const FONTS_BODY=["'Tajawal',Tahoma,sans-serif","'Cairo',Tahoma,sans-serif","'Almarai',Tahoma,sans-serif","'Mada',Tahoma,sans-serif","'Changa',Tahoma,sans-serif","'Reem Kufi',Tahoma,sans-serif","'El Messiri',Tahoma,sans-serif"];
 const FONTS_TITLE=["'Lalezar',serif","'Amiri',serif","'El Messiri',sans-serif","'Reem Kufi',sans-serif","'Cairo',sans-serif","'Changa',sans-serif","'Almarai',sans-serif","'Mada',sans-serif"];
@@ -741,7 +742,7 @@ function loadImg(url){return new Promise(res=>{
 const STOPW=new Set(['the','and','of','in','with','for','on','an','to','from']);
 async function findImage(q,w){ // يبحث بعبارة محددة ويقبل الصورة فقط إذا طابق اسمها كلمات البحث
   if(/الدراسات الإسلامية|القرآن|التربية الإسلامية|الدين|الفقه|الحديث|التوحيد|السيرة|التفسير/.test($('subject').value+' '+$('topic').value))return null;
-  q=String(q||'').trim();if(!q||$('imgs').value==='none')return null;
+  q=String(q||'').trim();if(!q||imgCount()===0)return null;
   const words=q.toLowerCase().split(/\s+/).filter(x=>x.length>2&&!STOPW.has(x)).map(x=>x.replace(/s$/,''));
   if(!words.length)return null;
   const need=words.length<=3?words.length:Math.ceil(words.length*0.75);
@@ -762,7 +763,7 @@ async function findImage(q,w){ // يبحث بعبارة محددة ويقبل ا
   return null;
 }
 async function getImages(qs,topic,cap){
-  const want=Math.min(cap||99,{none:0,few:3,mid:6,many:10}[$('imgs').value]);
+  const want=Math.min(cap||99,imgCount());
   if(!want)return [];
   qs=(Array.isArray(qs)?qs:[]).map(String).filter(Boolean).slice(0,6);
   const res=await Promise.all(qs.map(q=>findImage(q)));
@@ -787,7 +788,7 @@ function loadImg(url){return new Promise(res=>{
   im.src=url;
 })}
 async function getImages(qs,topic,cap){
-  const want=Math.min(cap||99,{none:0,few:3,mid:6,many:10}[$('imgs').value]);
+  const want=Math.min(cap||99,imgCount());
   if(!want)return [];
   try{
     qs=(Array.isArray(qs)?qs:[]).map(String).filter(Boolean).slice(0,5);
@@ -839,7 +840,7 @@ async function makeResearch(onProgress){
 
   const imgP=getImages(plan.imgQ,topic,1);
   const heads=secs.map((s,i)=>`${i+1}. ${s.h}`).join('\n');
-  const wantImg={none:0,few:3,mid:6,many:10}[$('imgs').value]||0;
+  const wantImg=imgCount()||0;
   const elig=secs.map((x,i)=>i).filter(i=>!secs[i].kind);
   const mm=wantImg?Math.min(elig.length,wantImg+1):0,FS=new Set();
   for(let q=0;q<mm;q++)FS.add(elig[Math.min(elig.length-1,Math.floor((q+0.5)*elig.length/mm))]);
@@ -1041,6 +1042,7 @@ function applyMode(){
 }
 $('acctBtn').onclick=()=>{const b=$('profBox');b.style.display=b.style.display==='none'?'block':'none'};
 $('mode').onchange=applyMode;$('size').onchange=applyMode;
+$('imgs').onchange=()=>{$('nImgs').style.display=$('imgs').value==='custom'?'block':'none'};
 function hiLightModes(){document.querySelectorAll('.mcard').forEach(b=>b.classList.toggle('on',b.dataset.m===$('mode').value))}
 document.querySelectorAll('.mcard').forEach(b=>b.onclick=()=>{$('mode').value=b.dataset.m;applyMode();hiLightModes()});
 $('mode').addEventListener('change',hiLightModes);
@@ -1159,7 +1161,7 @@ async function makeSummary(onProgress){
   onProgress('🖼️ جاري جلب صورة لكل فكرة…');
   const th=await Promise.all(cs.map(c=>conceptImg(c.img)));
   const t=r.table;
-  return {title:r.title||topic,intro:String(r.intro||''),concepts:cs.map((c,i)=>({h:String(c.h),t:String(c.t||''),icon:String(c.icon||'').slice(0,4),src:th[i]||null})),useImgs:$('imgs').value!=='none',terms:A(r.terms).filter(t=>t&&t.w).map(t=>({w:String(t.w),d:String(t.d||'')})),table:(t&&A(t.cols).length>1)?{title:String(t.title||''),cols:t.cols.map(String),rows:A(t.rows).slice(0,6).map(x=>A(x).map(String))}:null,example:String(r.example||''),remember:A(r.remember).map(String),quiz:A(r.quiz).map(String),theme:r.theme,imgSize:/^[sml]$/.test(r.imgSize)?r.imgSize:'m',images};
+  return {title:r.title||topic,intro:String(r.intro||''),concepts:cs.map((c,i)=>({h:String(c.h),t:String(c.t||''),icon:String(c.icon||'').slice(0,4),src:th[i]||null})),useImgs:imgCount()>0,terms:A(r.terms).filter(t=>t&&t.w).map(t=>({w:String(t.w),d:String(t.d||'')})),table:(t&&A(t.cols).length>1)?{title:String(t.title||''),cols:t.cols.map(String),rows:A(t.rows).slice(0,6).map(x=>A(x).map(String))}:null,example:String(r.example||''),remember:A(r.remember).map(String),quiz:A(r.quiz).map(String),theme:r.theme,imgSize:/^[sml]$/.test(r.imgSize)?r.imgSize:'m',images};
 }
 function sumHTML(d,o){
   const E=esc,ims=[...(d.images||[]).slice(0,3),{src:mindMap(d),map:1}];
