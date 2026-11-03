@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مصمم البحوث المدرسية الذكي</title>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@400;700;900&family=Changa:wght@400;700;800&family=Mada:wght@400;700;900&family=Reem+Kufi:wght@400;700&family=El+Messiri:wght@400;700&family=Lalezar&family=Tajawal:wght@400;500;700;800&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#f4f7f5;--card:#fff;--ink:#17261f;--mute:#5d6f66;--line:#d9e3dd;--brand:#0b6b4a;--brand2:#e8f3ee;--onbrand:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1714;--card:#17221d;--ink:#e8f1ec;--mute:#9db1a6;--line:#2a3a33;--brand:#3fbf8c;--brand2:#1d3028;--onbrand:#08150f}}
+:root[data-theme="dark"]{--bg:#0f1714;--card:#17221d;--ink:#e8f1ec;--mute:#9db1a6;--line:#2a3a33;--brand:#3fbf8c;--brand2:#1d3028;--onbrand:#08150f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Tajawal',Tahoma,Arial,sans-serif;line-height:1.7}
+header{padding:56px 20px 8px;max-width:960px;margin:auto}
+h1{margin:0 0 4px;font-size:28px;font-weight:800}
+header p{margin:0;color:var(--mute)}
+main{max-width:960px;margin:auto;padding:12px 20px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:block;font-size:13px;font-weight:700;color:var(--mute);margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.full{grid-column:1/-1}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 20px;cursor:pointer;background:var(--brand);color:var(--onbrand)}
+button.sec{background:var(--brand2);color:var(--brand)}
+button:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#status{color:var(--mute);font-size:14px}
+.err{color:#c0392b}
+#out{overflow-x:auto}
+.page{width:794px;height:1123px;overflow:hidden;background:#fff;color:#1b2a23;margin:0 auto 16px;padding:70px 64px 90px;position:relative;box-shadow:0 2px 14px rgba(0,0,0,.18);font-family:var(--pf,'Tajawal',Tahoma,sans-serif);direction:rtl;border-top:10px solid var(--pc)}
+.page h2{font-size:26px;color:var(--pc);margin:0 0 14px;border-bottom:2px solid var(--pl);padding-bottom:8px}
+.page h3{font-size:19px;color:var(--pc);margin:16px 0 6px}
+.page p,.page li{font-size:calc(17px*var(--k,1));line-height:var(--lh,2);margin:0 0 8px;text-align:justify}
+.page ul,.page ol{padding-right:22px;margin:0 0 8px}
+.cover{text-align:center;display:flex;flex-direction:column;align-items:center;}
+.cover .top{font-size:16px;line-height:1.9;font-weight:700;margin-top:18px}
+.cover .ttl{font-family:'Amiri',serif;font-size:44px;color:var(--pc);margin:120px 0 20px;line-height:1.5;padding:0 20px}
+.cover .sub{font-size:20px;margin-bottom:90px;color:#3d5249}
+.cover table{border-collapse:collapse;font-size:18px;margin-top:auto;margin-bottom:30px;width:80%}
+.cover td{padding:9px 12px;border:1px solid var(--pl);text-align:right}
+.cover td:first-child{background:var(--pl2);font-weight:700;width:38%}
+.fn{position:absolute;bottom:28px;left:0;right:0;text-align:center;font-size:13px;color:#7a8c83}
+.toc .it{display:flex;justify-content:space-between;border-bottom:1px dotted var(--pc);padding:7px 0;font-size:18px}
+.note{font-size:14px;color:var(--mute);margin-top:8px}
+.ai-box{background:var(--brand2);border:1px solid var(--brand);padding:12px;border-radius:10px;margin-top:10px}
+.page{--pc:#0b6b4a;--pl:#cfe5da;--pl2:#e8f3ee}
+.h-bar h2{border-bottom:0;border-right:8px solid var(--pc);padding:5px 14px;background:var(--pl2)}
+.h-fill h2{background:var(--pc);color:#fff;border:0;padding:8px 16px;border-radius:8px}
+.cv-a{outline:3px double var(--pc);outline-offset:-26px}
+.cv-b{border-top:0}
+.cv-b .top{margin:-70px -64px 0;width:calc(100% + 128px);padding:50px 64px 30px;background:var(--pc);color:#fff}
+.cv-b .ttl{margin-top:90px}
+.cv-c{border:14px solid var(--pc);outline:2px solid var(--pc);outline-offset:-30px}
+.cv-c .ttl{background:var(--pl2);padding:34px 20px;border-radius:14px;width:100%}
+.cv-d{border-top:0;border-right:46px solid var(--pc);border-left:6px solid var(--pl)}
+.cover{padding-bottom:50px}
+.h-under h2{border-bottom:0;position:relative;padding-bottom:12px}
+.h-under h2::after{content:"";position:absolute;right:0;bottom:0;width:90px;height:5px;background:var(--pc);border-radius:3px}
+.h-box h2{border:2px solid var(--pc);border-radius:12px;padding:8px 16px;background:var(--pl2)}
+.bgt{background:linear-gradient(180deg,var(--pl2) 0,#fff 150px)}
+.bgf::before{content:"";position:absolute;inset:18px;border:1.5px solid var(--pl);pointer-events:none}
+.hero{width:78%;height:220px;object-fit:cover;border-radius:14px;margin-top:26px;border:3px solid var(--pc)}
+.hasimg .ttl{margin:26px 0 12px;font-size:38px}
+.hasimg .sub{margin-bottom:22px}
+.cv-c .hero{width:88%}
+.cv-e{border-top:0;padding-top:0}
+.cv-e:not(.hasimg){border-top:10px solid var(--pc);padding-top:70px}
+.cv-e .hero{order:-1;width:calc(100% + 128px);max-width:none;margin:0 -64px;height:320px;border:0;border-bottom:10px solid var(--pc);border-radius:0}
+.cv-e.hasimg .top{margin-top:26px}
+.cv-f{border-top:0;padding-top:60px;background:linear-gradient(var(--pl2),#fff 55%)}
+.cv-f .hero{width:230px;height:230px;border-radius:50%;border:8px solid var(--pc);margin:22px 0 4px}
+.fig{margin:10px 0 14px;text-align:center}
+.fig img{width:100%;height:var(--fh,230px);object-fit:cover;border-radius:10px;border:2px solid var(--pl)}
+.fig figcaption{font-size:14px;color:#5d6f66;margin-top:4px}
+.slide{width:1280px;height:720px;overflow:hidden;background:#fff;color:#1b2a23;margin:0 auto 16px;position:relative;direction:rtl;font-family:var(--pf,'Tajawal',Tahoma,sans-serif);box-shadow:0 2px 14px rgba(0,0,0,.18);--pc:#0b6b4a;--pl:#cfe5da;--pl2:#e8f3ee}
+.slide .bar{position:absolute;top:0;right:0;left:0;height:12px;background:var(--pc)}
+.slide .hd{padding:34px 60px 0}.slide h2{margin:0;font-size:42px;color:var(--pc);font-weight:800;line-height:1.3}
+.slide .hd::after{content:"";display:block;width:110px;height:6px;background:var(--pc);border-radius:3px;margin-top:10px}
+.slide .sb{position:absolute;top:150px;bottom:70px;right:60px;left:60px;font-size:30px;line-height:1.7;overflow:hidden}
+.slide ul{margin:0;padding-right:30px}.slide li{margin-bottom:.45em}
+.slide .pn{position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:16px;color:#7a8c83}
+.s-cover{background:linear-gradient(135deg,var(--pc),#000 230%);color:#fff;display:flex;align-items:center}
+.s-cover .ct{padding:0 80px;flex:1}.s-cover h1{font-size:58px;margin:0 0 16px;line-height:1.35}.s-cover p{font-size:25px;opacity:.9;margin:0 0 8px}
+.s-cover img{width:44%;height:100%;object-fit:cover}
+.s-sec{background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center}
+.s-sec h2{color:#fff;font-size:60px}.s-sec p{font-size:28px;opacity:.9;margin:14px 0 0}
+.slide .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide .ov{position:absolute;bottom:0;right:0;left:0;padding:60px 60px 50px;background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff}
+.slide .ov h2{color:#fff}.slide .ov p{font-size:26px;margin:10px 0 0}
+.sg{display:grid;gap:22px;height:100%}
+.c2{background:var(--pl2);border-radius:16px;padding:18px 22px;border-top:6px solid var(--pc);overflow:hidden}
+.c2 h3{margin:0 0 .3em;color:var(--pc);font-size:1.05em}.c2 p{margin:0;font-size:.8em;line-height:1.6}.c2 li{font-size:.85em}
+.st{display:flex;flex-direction:column;justify-content:center;text-align:center}.st b{font-size:2.2em;color:var(--pc);line-height:1.2}
+.c2 i{display:inline-block;width:1.6em;height:1.6em;line-height:1.6em;text-align:center;border-radius:50%;background:var(--pc);color:#fff;font-style:normal;margin-bottom:.4em;font-size:.9em}
+.q{display:flex;flex-direction:column;justify-content:center;height:100%;font-size:1.2em;line-height:1.8;border-right:10px solid var(--pc);background:var(--pl2);border-radius:12px;padding:20px 34px}
+.q small{display:block;font-size:.6em;color:#5d6f66;margin-top:.5em}
+.si{width:100%;height:100%;object-fit:cover;border-radius:16px;border:3px solid var(--pc)}
+.stb{width:100%;border-collapse:collapse;font-size:.8em}.stb th{background:var(--pc);color:#fff;padding:10px}.stb td{border:1px solid var(--pl);padding:10px;text-align:center}.stb tr:nth-child(even) td{background:var(--pl2)}
+.page.sum{padding:34px 40px 44px;font-size:calc(13px*var(--k,1));line-height:1.7}
+.sum .sh{display:flex;justify-content:space-between;align-items:center;background:var(--pc);color:#fff;border-radius:12px;padding:14px 20px;margin-bottom:10px}
+.sum h1{margin:0;font-size:1.7em;line-height:1.3}.sum .sh span{font-size:.85em;opacity:.9}
+.sum p,.sum li{font-size:1em;line-height:1.7;margin:0 0 3px;text-align:justify}
+.sum .sin{background:var(--pl2);border-radius:10px;padding:8px 14px;margin-bottom:10px}
+.sum h3{font-size:1.05em;color:var(--pc);margin:0 0 4px}
+.sum .scol{columns:2;column-gap:12px;margin-bottom:10px}
+.sum .sbx{background:#fff;border:1.5px solid var(--pl);border-top:4px solid var(--pc);border-radius:10px;padding:8px 12px;margin-bottom:10px;break-inside:avoid}
+.sum .srow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sum .rem{background:var(--pl2);border-right:6px solid var(--pc);border-radius:10px;padding:8px 14px;margin-bottom:10px}
+.sum ul,.sum ol{margin:0;padding-right:20px}
+.sum .sim{width:100%;height:130px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+.sum .sinfo{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.95em;border-bottom:1px dashed var(--pc);padding-bottom:6px;margin-bottom:8px;color:#3d5249}
+.sum .simr{display:flex;gap:10px;margin-bottom:8px}.sum .simr .sim{flex:1;min-width:0;width:auto;margin:0}
+.sum .sbx{padding:6px 10px;margin-bottom:8px}
+.sum .stbl{width:100%;border-collapse:collapse;font-size:.95em}.sum .stbl th{background:var(--pc);color:#fff;padding:3px 6px}.sum .stbl td{border:1px solid var(--pl);padding:3px 6px;text-align:center}
+.sum .sim.map{object-fit:contain;background:#fff;border:1.5px solid var(--pl);flex:1.5}
+.sum .cpt{display:flex;gap:8px;align-items:flex-start}
+.sum .cpt>div:last-child{flex:1;min-width:0}
+.sum .cpt img,.sum .ic{flex:0 0 auto;width:calc(var(--ci,56px)*var(--k,1));height:calc(var(--ci,56px)*var(--k,1));border-radius:10px;object-fit:cover;border:1.5px solid var(--pl)}
+.sum .ic{background:var(--pl2);display:flex;align-items:center;justify-content:center;font-size:calc(var(--ci,56px)*.5*var(--k,1));line-height:1}
+.page{--ac:#d9a441;--dk:#14201b}
+.cv-g{background:linear-gradient(var(--pc) 0 52%,#fff 52%)}
+.cv-g .top,.cv-g .ttl{color:#fff}.cv-g .ttl{margin-top:70px}.cv-g .sub{color:var(--pl)}
+.cv-h{background:var(--dk);color:#fff}
+.cv-h .top,.cv-h .sub{color:var(--pl)}.cv-h .ttl{color:#fff}
+.cv-h td{color:#fff;background:transparent!important;border-color:var(--pc)}
+.cv-h td:first-child{background:var(--pc)!important}
+.cv-i{background:repeating-linear-gradient(135deg,var(--pl2) 0 22px,#fff 22px 44px)}
+.cv-j{border:16px solid var(--pc);outline:4px solid var(--ac);outline-offset:-44px}
+.cv-j .ttl{color:var(--pc)}
+.h-stripe h2{background:var(--pc);color:#fff;border:0;margin:0 -64px 16px;padding:10px 64px}
+.h-chip h2{display:inline-block;border:0;background:var(--pl2);color:var(--pc);padding:4px 18px;border-radius:999px}
+.h-slant h2{background:linear-gradient(90deg,var(--pc),var(--ac));color:#fff;border:0;padding:8px 18px;border-radius:0 0 18px 0}
+.bgd{background-color:#fff;background-image:radial-gradient(var(--pl) 1.2px,transparent 1.3px);background-size:22px 22px}
+.bgs{background:repeating-linear-gradient(0deg,#fff 0 30px,var(--pl2) 30px 31px)}
+.bgr{background:radial-gradient(circle at 100% 0,var(--pl2),#fff 60%)}
+
+
+/* ===== طبقة التصميم الجديدة للواجهة والمخرجات ===== */
+:root{
+  --bg:#eef2f8;--card:#ffffff;--ink:#17243b;--mute:#68768d;--line:#dce4f0;
+  --brand:#4d5fd0;--brand2:#edf0ff;--onbrand:#ffffff;
+  --shadow:0 14px 38px rgba(29,48,89,.09);--shadow-strong:0 22px 55px rgba(25,42,78,.15);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101827;--card:#182438;--ink:#edf3ff;--mute:#a5b3ca;--line:#2b3a52;
+    --brand:#8795ff;--brand2:#263252;--onbrand:#101827;
+    --shadow:0 14px 38px rgba(0,0,0,.22);--shadow-strong:0 22px 55px rgba(0,0,0,.32);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101827;--card:#182438;--ink:#edf3ff;--mute:#a5b3ca;--line:#2b3a52;
+  --brand:#8795ff;--brand2:#263252;--onbrand:#101827;
+  --shadow:0 14px 38px rgba(0,0,0,.22);--shadow-strong:0 22px 55px rgba(0,0,0,.32);
+  color-scheme:dark;
+}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  background-color:var(--bg);
+  background-image:radial-gradient(ellipse at 8% 4%,rgba(91,112,220,.13),transparent 34%),
+                   radial-gradient(ellipse at 94% 18%,rgba(34,177,166,.10),transparent 30%),
+                   linear-gradient(145deg,transparent 55%,rgba(106,129,190,.035));
+  color:var(--ink);font-family:'Tajawal','Cairo',Tahoma,Arial,sans-serif;letter-spacing:.05px;
+}
+header{max-width:1020px;padding:76px 24px 20px;position:relative}
+header::before{
+  content:"منصة تعليمية متكاملة";display:inline-flex;align-items:center;gap:8px;
+  padding:6px 13px;margin-bottom:13px;border:1px solid rgba(91,112,220,.2);
+  border-radius:999px;background:var(--brand2);color:var(--brand);
+  font-size:12px;font-weight:800;letter-spacing:.3px;
+}
+header h1{
+  margin:0 0 9px;font-family:'Cairo','Tajawal',sans-serif;font-size:clamp(27px,4vw,36px);
+  font-weight:900;line-height:1.35;letter-spacing:-.6px;color:var(--ink);
+}
+header p{max-width:760px;color:var(--mute);font-size:15px;line-height:1.9}
+header .note{display:inline-block;margin-right:5px;color:var(--brand);font-weight:800}
+main{max-width:1020px;padding:14px 24px 76px}
+.card{
+  position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;
+  padding:24px;margin-bottom:20px;box-shadow:var(--shadow);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+.card:focus-within{border-color:color-mix(in srgb,var(--brand) 45%,var(--line));box-shadow:var(--shadow-strong)}
+.grid{grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:17px 16px}
+label{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:7px}
+input,select,textarea{
+  min-height:46px;padding:11px 14px;border:1px solid var(--line);border-radius:13px;
+  background:color-mix(in srgb,var(--bg) 52%,var(--card));color:var(--ink);
+  font-family:'Tajawal','Cairo',Tahoma,sans-serif;font-size:15px;line-height:1.5;
+  box-shadow:inset 0 1px 2px rgba(18,35,65,.025);transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+}
+textarea{min-height:82px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--mute);opacity:.75}
+input:hover,select:hover,textarea:hover{border-color:color-mix(in srgb,var(--brand) 35%,var(--line))}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--brand);background:var(--card);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 14%,transparent);
+}
+button{
+  min-height:45px;padding:11px 19px;border-radius:13px;
+  background:linear-gradient(135deg,var(--brand),color-mix(in srgb,var(--brand) 78%,#20b7ae));
+  color:var(--onbrand);font-weight:800;letter-spacing:.1px;
+  box-shadow:0 7px 16px color-mix(in srgb,var(--brand) 22%,transparent);
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+button:hover:not(:disabled){transform:translateY(-2px);filter:saturate(1.08);box-shadow:0 11px 22px color-mix(in srgb,var(--brand) 27%,transparent)}
+button:active:not(:disabled){transform:translateY(0);box-shadow:0 4px 10px color-mix(in srgb,var(--brand) 18%,transparent)}
+button.sec{background:var(--brand2);color:var(--brand);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 13%,transparent)}
+button.sec:hover:not(:disabled){background:color-mix(in srgb,var(--brand2) 78%,var(--brand));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 25%,transparent),0 8px 16px rgba(30,45,90,.08)}
+button:disabled{opacity:.55;filter:grayscale(.15)}
+#acctBtn{border:1px solid rgba(255,255,255,.28);border-radius:999px;box-shadow:0 8px 22px rgba(25,38,83,.2);backdrop-filter:blur(12px)}
+#profBox{border-radius:18px!important;background:var(--card)!important;border:1px solid var(--line)!important;box-shadow:var(--shadow-strong)!important}
+.ai-box{border:1px solid color-mix(in srgb,var(--brand) 28%,var(--line));border-radius:16px;background:linear-gradient(135deg,var(--brand2),color-mix(in srgb,var(--card) 65%,var(--brand2)));padding:17px}
+.ai-box label{color:var(--brand)!important;font-size:14px}
+.note{color:var(--mute);line-height:1.7}
+#status,#pstatus{font-weight:700}
+.err{color:#d04455}
+#histBox,#actions{border-style:solid}
+#out{overflow-x:auto;padding:8px 0 26px;scrollbar-color:var(--brand2) transparent}
+
+/* صفحات البحث: تبقى مساحة A4 الفعلية 794 × 1123 بكسل */
+.page{
+  width:794px;height:1123px;overflow:hidden;background:#fff;color:#202b40;
+  margin:0 auto 22px;padding:70px 64px 90px;position:relative;
+  box-shadow:0 16px 42px rgba(18,31,60,.16),0 2px 8px rgba(18,31,60,.08);
+  font-family:var(--pf,'Tajawal',Tahoma,sans-serif);direction:rtl;
+}
+.page h2{font-size:27px;font-weight:900;letter-spacing:-.2px;color:var(--pc);margin:0 0 17px;border-bottom:2px solid var(--pl);padding-bottom:10px;line-height:1.5}
+.page h3{font-size:20px;font-weight:800;color:var(--pc);margin:18px 0 7px}
+.page p,.page li{font-size:calc(17px*var(--k,1));line-height:var(--lh,2);margin:0 0 9px;text-align:justify;color:#263348}
+.page ul,.page ol{padding-right:24px;margin:0 0 10px}
+.page li::marker{color:var(--pc);font-weight:800}
+.cover{padding-bottom:50px;text-align:center}
+.cover .top{font-size:16px;line-height:2;font-weight:800;margin-top:20px;color:var(--pc)}
+.cover .ttl{
+  font-family:'Amiri',serif;font-size:45px;font-weight:700;color:var(--pc);
+  margin:112px 0 18px;line-height:1.55;padding:0 24px;position:relative;
+}
+.cover .ttl::after{content:"";display:block;width:92px;height:5px;border-radius:99px;background:var(--pc);opacity:.8;margin:16px auto 0}
+.cover .sub{font-size:20px;font-weight:700;margin-bottom:84px;color:#526078}
+.cover table{border-collapse:separate;border-spacing:0;font-size:18px;margin-top:auto;margin-bottom:30px;width:82%;overflow:hidden;border:1px solid var(--pl);border-radius:12px}
+.cover td{padding:10px 13px;border:0;border-bottom:1px solid var(--pl);text-align:right}
+.cover tr:last-child td{border-bottom:0}
+.cover td:first-child{background:var(--pl2);font-weight:800;width:38%;color:var(--pc)}
+.fn{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:13px;color:#8490a2;font-weight:700}
+.toc .it{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px dashed var(--pl);padding:9px 2px;font-size:18px;color:#29374d}
+.toc .it span:last-child{color:var(--pc);font-weight:800}
+.h-line h2{border-bottom:3px solid var(--pl)}
+.h-bar h2{border:0;border-right:8px solid var(--pc);padding:8px 16px;background:var(--pl2);border-radius:0 10px 10px 0}
+.h-fill h2{background:var(--pc);color:#fff;border:0;padding:10px 17px;border-radius:10px}
+.h-under h2{border-bottom:0;position:relative;padding-bottom:14px}
+.h-under h2::after{content:"";position:absolute;right:0;bottom:0;width:104px;height:5px;background:var(--pc);border-radius:5px}
+.h-box h2{border:2px solid var(--pl);border-right:7px solid var(--pc);border-radius:12px;padding:8px 15px;background:var(--pl2)}
+.h-stripe h2{background:var(--pc);color:#fff;border:0;margin:0 -64px 18px;padding:12px 64px}
+.h-chip h2{display:inline-block;border:0;background:var(--pl2);color:var(--pc);padding:7px 20px;border-radius:999px}
+.h-slant h2{background:linear-gradient(105deg,var(--pc),var(--ac));color:#fff;border:0;padding:10px 18px;border-radius:0 0 18px 0}
+.cv-a{outline:3px double var(--pc);outline-offset:-27px}
+.cv-b{border-top:0}
+.cv-b .top{margin:-70px -64px 0;width:calc(100% + 128px);padding:48px 64px 30px;background:var(--pc);color:#fff;border-radius:0 0 22px 22px}
+.cv-b .ttl{margin-top:88px}
+.cv-c{border:14px solid var(--pc);outline:2px solid var(--ac);outline-offset:-30px}
+.cv-c .ttl{background:var(--pl2);padding:32px 20px;border-radius:16px;width:100%}
+.cv-d{border-top:0;border-right:46px solid var(--pc);border-left:6px solid var(--pl)}
+.cover{padding-bottom:50px}
+.bgt{background:linear-gradient(180deg,var(--pl2) 0,#fff 190px)}
+.bgf::before{content:"";position:absolute;inset:20px;border:1.5px solid var(--pl);pointer-events:none}
+.hero{width:78%;height:220px;object-fit:cover;border-radius:16px;margin-top:26px;border:4px solid var(--pc);box-shadow:0 10px 24px rgba(20,35,65,.12)}
+.hasimg .ttl{margin:25px 0 12px;font-size:39px}
+.hasimg .sub{margin-bottom:22px}
+.cv-c .hero{width:88%}
+.cv-e{border-top:0;padding-top:0}
+.cv-e:not(.hasimg){border-top:10px solid var(--pc);padding-top:70px}
+.cv-e .hero{order:-1;width:calc(100% + 128px);max-width:none;margin:0 -64px;height:320px;border:0;border-bottom:10px solid var(--pc);border-radius:0;box-shadow:none}
+.cv-e.hasimg .top{margin-top:26px}
+.cv-f{border-top:0;padding-top:60px;background:linear-gradient(var(--pl2),#fff 58%)}
+.cv-f .hero{width:230px;height:230px;border-radius:50%;border:8px solid var(--pc);margin:22px 0 4px}
+.cv-g{background:linear-gradient(var(--pc) 0 52%,#fff 52%)}
+.cv-g .top,.cv-g .ttl{color:#fff}.cv-g .ttl{margin-top:70px}.cv-g .sub{color:var(--pl)}
+.cv-h{background:var(--dk);color:#fff}
+.cv-h .top,.cv-h .sub{color:var(--pl)}.cv-h .ttl{color:#fff}.cv-h .ttl::after{background:var(--ac)}
+.cv-h td{color:#fff;background:transparent!important;border-color:var(--pc)}
+.cv-h td:first-child{background:var(--pc)!important}
+.cv-i{background:repeating-linear-gradient(135deg,var(--pl2) 0 22px,#fff 22px 44px)}
+.cv-j{border:16px solid var(--pc);outline:4px solid var(--ac);outline-offset:-44px}
+.cv-j .ttl{color:var(--pc)}
+.fig{margin:13px 0 17px;text-align:center;break-inside:avoid}
+.fig img{width:100%;height:var(--fh,230px);object-fit:cover;border-radius:12px;border:2px solid var(--pl)}
+.fig figcaption{font-size:14px;color:#66748a;margin-top:6px;font-weight:600}
+.bgd{background-color:#fff;background-image:radial-gradient(var(--pl) 1.2px,transparent 1.3px);background-size:24px 24px}
+.bgs{background:repeating-linear-gradient(0deg,#fff 0 32px,var(--pl2) 32px 33px)}
+.bgr{background:radial-gradient(circle at 100% 0,var(--pl2),#fff 65%)}
+
+/* الشرائح: تبقى مساحة كل شريحة 1280 × 720 بكسل */
+.slide{
+  width:1280px;height:720px;overflow:hidden;background:#fff;color:#202b40;
+  margin:0 auto 22px;position:relative;direction:rtl;
+  font-family:var(--pf,'Tajawal',Tahoma,sans-serif);
+  box-shadow:0 16px 42px rgba(18,31,60,.17),0 2px 8px rgba(18,31,60,.08);
+}
+.slide .bar{height:13px;background:linear-gradient(90deg,var(--pc),var(--ac))}
+.slide .hd{padding:38px 64px 0}
+.slide h2{margin:0;font-size:43px;color:var(--pc);font-weight:900;line-height:1.35;letter-spacing:-.4px}
+.slide .hd::after{content:"";display:block;width:118px;height:6px;background:var(--ac);border-radius:9px;margin-top:13px}
+.slide .sb{top:158px;bottom:72px;right:64px;left:64px;font-size:30px;line-height:1.72;color:#2b3850}
+.slide ul{margin:0;padding-right:32px}.slide li{margin-bottom:.48em}
+.slide .pn{bottom:22px;font-size:15px;color:#8894a6;font-weight:700}
+.s-cover{background:linear-gradient(125deg,var(--pc),var(--dk));color:#fff}
+.s-cover .ct{padding:0 82px;flex:1}
+.s-cover h1{font-size:59px;margin:0 0 18px;line-height:1.38;font-family:var(--pf,'Tajawal',sans-serif);font-weight:900}
+.s-cover p{font-size:25px;opacity:.92;margin:0 0 9px}
+.s-cover img{width:44%;height:100%;object-fit:cover;filter:saturate(.88)}
+.s-sec{background:linear-gradient(135deg,var(--pc),var(--dk));color:#fff}
+.s-sec h2{color:#fff;font-size:62px}.s-sec p{font-size:28px;opacity:.92;margin:16px 0 0}
+.slide .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide .ov{position:absolute;bottom:0;right:0;left:0;padding:64px 64px 52px;background:linear-gradient(transparent,rgba(9,17,32,.86));color:#fff}
+.slide .ov h2{color:#fff}.slide .ov p{font-size:26px;margin:10px 0 0}
+.sg{display:grid;gap:22px;height:100%}
+.c2{background:var(--pl2);border-radius:18px;padding:20px 23px;border-top:7px solid var(--pc);overflow:hidden;box-shadow:0 8px 18px rgba(20,35,65,.055)}
+.c2 h3{margin:0 0 .35em;color:var(--pc);font-size:1.08em;font-weight:900}.c2 p{margin:0;font-size:.8em;line-height:1.65}.c2 li{font-size:.85em}
+.st{display:flex;flex-direction:column;justify-content:center;text-align:center}.st b{font-size:2.25em;color:var(--pc);line-height:1.2}
+.c2 i{display:inline-block;width:1.65em;height:1.65em;line-height:1.65em;text-align:center;border-radius:50%;background:var(--pc);color:#fff;font-style:normal;margin-bottom:.45em;font-size:.9em}
+.q{display:flex;flex-direction:column;justify-content:center;height:100%;font-size:1.2em;line-height:1.8;border-right:11px solid var(--pc);background:var(--pl2);border-radius:14px;padding:22px 35px}
+.q small{display:block;font-size:.6em;color:#65738a;margin-top:.5em}
+.si{width:100%;height:100%;object-fit:cover;border-radius:18px;border:3px solid var(--pc)}
+.stb{width:100%;border-collapse:separate;border-spacing:0;font-size:.8em;overflow:hidden;border-radius:12px}
+.stb th{background:var(--pc);color:#fff;padding:11px}.stb td{border:1px solid var(--pl);padding:10px;text-align:center}.stb tr:nth-child(even) td{background:var(--pl2)}
+
+/* الملخص: صفحة واحدة بهرم بصري واضح */
+.page.sum{padding:34px 40px 44px;font-size:calc(13px*var(--k,1));line-height:1.7}
+.sum .sh{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(105deg,var(--pc),var(--dk));color:#fff;border-radius:14px;padding:15px 20px;margin-bottom:11px}
+.sum h1{margin:0;font-size:1.7em;line-height:1.3;font-weight:900}.sum .sh span{font-size:.85em;opacity:.92}
+.sum p,.sum li{font-size:1em;line-height:1.7;margin:0 0 3px;text-align:justify}
+.sum .sin{background:var(--pl2);border-radius:11px;padding:9px 14px;margin-bottom:10px;border-right:5px solid var(--pc)}
+.sum h3{font-size:1.05em;color:var(--pc);margin:0 0 4px;font-weight:900}
+.sum .scol{columns:2;column-gap:13px;margin-bottom:10px}
+.sum .sbx{background:#fff;border:1.5px solid var(--pl);border-top:4px solid var(--pc);border-radius:11px;padding:8px 12px;margin-bottom:10px;break-inside:avoid}
+.sum .srow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sum .rem{background:var(--pl2);border-right:6px solid var(--pc);border-radius:11px;padding:8px 14px;margin-bottom:10px}
+.sum ul,.sum ol{margin:0;padding-right:20px}
+.sum .sim{width:100%;height:130px;object-fit:cover;border-radius:10px;margin-bottom:10px}
+.sum .sinfo{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.95em;border-bottom:1px dashed var(--pc);padding-bottom:6px;margin-bottom:8px;color:#46556d}
+.sum .simr{display:flex;gap:10px;margin-bottom:8px}.sum .simr .sim{flex:1;min-width:0;width:auto;margin:0}
+.sum .sbx{padding:6px 10px;margin-bottom:8px}
+.sum .stbl{width:100%;border-collapse:collapse;font-size:.95em}.sum .stbl th{background:var(--pc);color:#fff;padding:3px 6px}.sum .stbl td{border:1px solid var(--pl);padding:3px 6px;text-align:center}
+.sum .sim.map{object-fit:contain;background:#fff;border:1.5px solid var(--pl);flex:1.5}
+.sum .cpt{display:flex;gap:8px;align-items:flex-start}
+.sum .cpt>div:last-child{flex:1;min-width:0}
+.sum .cpt img,.sum .ic{flex:0 0 auto;width:calc(var(--ci,56px)*var(--k,1));height:calc(var(--ci,56px)*var(--k,1));border-radius:10px;object-fit:cover;border:1.5px solid var(--pl)}
+.sum .ic{background:var(--pl2);display:flex;align-items:center;justify-content:center;font-size:calc(var(--ci,56px)*.5*var(--k,1));line-height:1}
+
+@media(max-width:700px){
+  header{padding:72px 16px 16px}main{padding:10px 14px 48px}
+  .card{padding:17px;border-radius:18px;margin-bottom:15px}
+  .grid{grid-template-columns:1fr;gap:13px}
+  .full{grid-column:1}
+  .row button{flex:1 1 auto}
+  #status,#pstatus{flex-basis:100%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* ===== طبقة "الكراسة": تصميم موحّد يتغير لونه مع كل تصميم ===== */
+.page{background-color:#fffdf8;color:#2a2420;
+  background-image:
+    linear-gradient(90deg,transparent calc(100% - 53px),color-mix(in srgb,var(--pc) 42%,transparent) calc(100% - 53px),color-mix(in srgb,var(--pc) 42%,transparent) calc(100% - 51px),transparent calc(100% - 51px)),
+    repeating-linear-gradient(180deg,transparent 0 33px,color-mix(in srgb,var(--pc) 12%,transparent) 33px 34px);
+  background-position:0 0,0 92px;
+  box-shadow:0 1px 0 rgba(0,0,0,.05),0 20px 44px -26px rgba(0,0,0,.5)}
+.page p,.page li{color:#2a2420}
+.page h2{letter-spacing:0}
+.page h3{letter-spacing:0}
+
+/* إطار الغلاف الداخلي: خيط رفيع يحيط بالغلاف كله */
+.cover{isolation:isolate}
+.cover::after{content:"";position:absolute;inset:26px;border:1px solid color-mix(in srgb,var(--pc) 45%,transparent);pointer-events:none;z-index:0}
+.cover>*{position:relative;z-index:1}
+.cover .ttl{font-weight:700}
+
+/* زاوية الشرائح: مثلث لوني صغير يربط الشريحة بهوية التصميم */
+.slide{background-color:#fffdf8}
+.slide::after{content:"";position:absolute;left:0;bottom:0;width:0;height:0;border-style:solid;border-width:0 64px 64px 0;border-color:transparent var(--pl2) transparent transparent;pointer-events:none}
+.slide .sb{z-index:1}
+
+/* الملخص: الصفحة نفسها بخطوط الكراسة */
+.page.sum{background-image:
+    linear-gradient(90deg,transparent calc(100% - 40px),color-mix(in srgb,var(--pc) 42%,transparent) calc(100% - 40px),color-mix(in srgb,var(--pc) 42%,transparent) calc(100% - 38px),transparent calc(100% - 38px)),
+    repeating-linear-gradient(180deg,transparent 0 33px,color-mix(in srgb,var(--pc) 10%,transparent) 33px 34px)}
+
+
+/* ===== واجهة الاختيار: بطاقات الوضع والتصميم ===== */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:10px}
+.mcard{background:var(--bg);color:var(--ink);border:2px solid var(--line);text-align:right;padding:12px 14px;border-radius:12px;font-weight:700}
+.mcard small{display:block;font-weight:400;color:var(--mute);font-size:13px;margin-top:4px;line-height:1.5}
+.mcard.on{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand2)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.dcard{background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:right;font-weight:700;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.dcard small{font-weight:400;color:var(--mute);font-size:12px;line-height:1.5}
+.dcard .sw{height:34px;border-radius:8px;background:linear-gradient(90deg,var(--sw1,#0b6b4a) 0 55%,var(--sw2,#cfe5da) 55% 80%,var(--sw3,#e8f3ee) 80%)}
+.dcard.on{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand2)}
+#listsBox{align-items:center}
+#listsBox input{flex:1;min-width:160px}
+
+/* خلفيات التصاميم تظهر فوق ورق الكراسة الافتراضي */
+.page.bgf{background-image:none}
+.page.bgt{background-image:linear-gradient(180deg,var(--pl2) 0,transparent 170px)}
+.page.bgd{background-image:radial-gradient(var(--pl) 1.4px,transparent 1.5px);background-size:22px 22px}
+.page.bgs{background-image:repeating-linear-gradient(0deg,transparent 0 33px,var(--pl) 33px 34px)}
+.page.bgr{background-image:radial-gradient(circle at 100% 0,var(--pl2),transparent 55%)}
+.page.bggrid{background-image:linear-gradient(var(--pl) 1px,transparent 1px),linear-gradient(90deg,var(--pl) 1px,transparent 1px);background-size:26px 26px}
+.page.sum.bgf,.page.sum.bgt,.page.sum.bgd,.page.sum.bgs,.page.sum.bgr,.page.sum.bggrid{background-image:none}
+
+#animBg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(120deg,color-mix(in srgb,var(--brand) 16%,var(--bg)),color-mix(in srgb,var(--brand) 4%,var(--bg)),color-mix(in srgb,var(--brand) 20%,var(--bg)),color-mix(in srgb,var(--brand) 5%,var(--bg)));
+  background-size:300% 300%;animation:bgShift 24s ease-in-out infinite}
+html.no-anim #animBg{display:none}
+@keyframes bgShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@media (prefers-reduced-motion:reduce){#animBg{animation:none}}
+
+#animBg{background:linear-gradient(120deg,color-mix(in srgb,var(--brand) 22%,var(--bg)),color-mix(in srgb,var(--brand) 8%,var(--bg)),color-mix(in srgb,var(--brand) 26%,var(--bg)),color-mix(in srgb,var(--brand) 9%,var(--bg)));background-size:300% 300%}
+/* مقاطع الخلفية: تتبدل بانتقال ناعم */
+.bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.bgv.on{opacity:.9}
+#animBg.has-clips{animation:none;background:var(--bg)}
+#animBg.has-clips::after{content:"";position:absolute;inset:0;background:var(--bg);opacity:.18}
+
+/* المقطع أكبر قليلاً من الشاشة لإخفاء الحواف، وتحسين وضوح بسيط */
+.bgv{transform:scale(1.06);filter:saturate(1.12) contrast(1.04)}
+
+/* الواجهة شفافة قليلاً فوق المقطع، والكتابة تبقى واضحة */
+.card{background:color-mix(in srgb,var(--card) 68%,transparent)!important;backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1)}
+.mcard,.dcard{background:color-mix(in srgb,var(--card) 72%,transparent)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+header h1,header p{text-shadow:0 1px 10px rgba(0,0,0,.45)}
+
+@media print{
+  html,body{background:#fff!important}
+  body.printing *{visibility:hidden}
+  body.printing #out,body.printing #out *{visibility:visible}
+  body.printing #out{position:absolute;left:0;top:0;width:100%;overflow:visible;zoom:1!important}
+  body.printing .page,body.printing .slide{box-shadow:none!important;margin:0!important;page-break-after:always;break-after:page}
+  body.printing .page:last-child,body.printing .slide:last-child{page-break-after:auto;break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div id="animBg" aria-hidden="true"><video class="bgv" muted playsinline></video><video class="bgv" muted playsinline></video></div>
+<button class="sec" id="acctBtn" style="position:fixed;top:10px;right:10px;z-index:80;padding:8px 14px;font-size:14px">👤 حسابي</button>
+
+<header>
+<h1>📚 مصمم البحوث المدرسية الذكي</h1>
+<p>يخطط البحث أولاً ثم يكتب كل قسم على حدة، ويرقّم الصفحات ويضع الفهرس في النهاية. <span class="note" id="ver">• إصدار ٢٨-١٠-٢٠٢٦ (٢٣)</span></p>
+<div class="row" style="margin-top:10px"><span class="note">🎨 ألوان الواجهة:</span><select id="uiTheme" style="width:auto"><option value="green">أخضر</option><option value="blue">أزرق</option><option value="purple">بنفسجي</option><option value="orange">برتقالي</option><option value="slate">رمادي</option></select><label class="note" style="margin:0;display:flex;gap:6px;align-items:center"><input type="checkbox" id="animToggle" style="width:auto"> 🌀 خلفية متحركة</label></div>
+</header>
+<main>
+<section class="card" id="profBox" style="display:none;position:fixed;top:56px;right:10px;width:min(92vw,380px);z-index:70;box-shadow:0 12px 32px rgba(0,0,0,.4)">
+<div id="profNew">
+<label>👤 حسابي — تكتب اسمك ومدرستك مرة واحدة فقط، وبعدها لا يُطلب منك إلا اسم المعلم</label>
+<div class="grid"><div><label>اسمك</label><input id="pName"></div><div><label>المدرسة</label><input id="pSchool"></div></div>
+<div class="row" style="margin-top:10px"><button id="pSave">✅ حفظ حسابي</button></div>
+<div class="row" style="margin-top:12px"><input id="pCode" placeholder="عندك رمز حساب من جهاز آخر؟ الصقه هنا" style="flex:1"><button class="sec" id="pRestore">استعادة</button></div>
+</div>
+<div id="profOn" style="display:none">
+<div class="row"><span id="pHello" style="flex:1;font-weight:700"></span><button class="sec" id="pEdit">✏️ تعديل</button><button class="sec" id="pShare">📲 رمز الحساب</button><button class="sec" id="pOut">🚪 خروج</button></div>
+<div id="codeBox" class="row" style="display:none;margin-top:10px"><input id="codeVal" readonly style="flex:1"><button class="sec" id="codeCopy">نسخ</button></div>
+<div class="note">لنقل حسابك لجهاز آخر: اضغط «رمز الحساب» وانسخه، ثم الصقه في «استعادة» هناك. الأبحاث المحفوظة لا تنتقل معه.</div>
+</div>
+</section>
+<section class="card">
+<div class="grid">
+<div class="full"><label>نوع المخرج</label><div id="modeGrid" class="mgrid"><button type="button" class="mcard" data-m="doc"><b>📄 بحث مكتوب</b><small>بأقسام وفهرس وترقيم، وعدد صفحات تختاره</small></button><button type="button" class="mcard" data-m="slides"><b>📊 عرض تقديمي</b><small>شرائح بتخطيطات متنوعة وعدد تحدده</small></button><button type="button" class="mcard" data-m="sum"><b>📝 ملخص درس</b><small>ورقة واحدة تشرح الدرس بمفاهيمه وصوره</small></button></div><select id="mode" style="display:none"><option value="doc" selected>📄 بحث مكتوب</option><option value="slides">📊 عرض تقديمي (شرائح)</option><option value="sum">📝 ملخص درس (ورقة واحدة)</option></select></div>
+<div><label>المرحلة</label><select id="stage"><option>الابتدائية</option><option selected>المتوسطة</option><option>الثانوية</option></select></div>
+<div><label>الصف</label><select id="grade"></select></div>
+<div><label>المادة</label><select id="subject"></select></div>
+<div id="sizeBox"><label>حجم البحث</label><select id="size"><option value="short">مختصر (٨ صفحات)</option><option value="mid" selected>متوسط (١٢ صفحة)</option><option value="long">موسّع (١٦ صفحة)</option><option value="pages">📏 عدد صفحات محدد (بالضبط)</option></select></div>
+<div id="pagesBox" class="full" style="display:none"><label>عدد صفحات البحث الكلي (٥ – ٦٠) — يشمل الغلاف والخاتمة والمراجع والفهرس</label><input id="nPages" type="number" min="5" max="60" value="10"></div>
+<div id="slideBox" style="display:none"><label>عدد الشرائح (فارغ = الذكاء يقرر)</label><input id="nSlides" type="number" min="3" max="40" placeholder="مثال: 7"></div>
+<div><label>التصميم</label><select id="theme"><option value="rand" selected>🎲 عشوائي (يتغير كل مرة)</option><option value="ai">🤖 الذكاء يختار الأنسب</option></select></div>
+
+<div><label>الألوان</label><select id="colorSel"><option value="design" selected>كما في التصميم</option><option value="أخضر زمردي">أخضر زمردي</option><option value="أزرق ملكي">أزرق ملكي</option><option value="أزرق سماوي">أزرق سماوي</option><option value="تركوازي">تركوازي</option><option value="بنفسجي">بنفسجي</option><option value="نيلي">نيلي</option><option value="عنابي">عنابي</option><option value="وردي">وردي</option><option value="برتقالي">برتقالي</option><option value="ذهبي">ذهبي</option><option value="زيتي">زيتي</option><option value="رمادي فحمي">رمادي فحمي</option><option value="بني قهوة">بني قهوة</option><option value="custom">لون مخصص</option></select></div>
+<div id="customBox" style="display:none"><label>اختر اللون</label><input type="color" id="customColor" value="#0b6b4a" style="height:44px;padding:4px"></div>
+<div class="full"><div id="themeDesc" style="font-size:14px;color:var(--mute);line-height:1.8;white-space:pre-line;margin-top:-2px"></div></div>
+<div><label>الصور (من نفس الموضوع)</label><select id="imgs"><option value="none">بدون صور</option><option value="few">قليلة (٣)</option><option value="mid" selected>متوسطة (٦)</option><option value="many">كثيرة (١٠)</option></select></div>
+<div class="full"><label id="topicLbl">موضوع البحث</label><input id="topic" placeholder="مثال: العناصر والمركبات وتطبيقها في الكيمياء"></div>
+
+<div class="full ai-box">
+<label style="color:var(--brand)">🧠 أوامر وتعديلات البحث الخاصة (سيتم تطبيقها حرفياً):</label>
+<textarea id="customPrompt" rows="3" placeholder="مثال: ركز جداً على الأمثلة اليومية، واجعل الأسلوب تحليلياً متقدماً..."></textarea>
+</div>
+
+<div class="full"><label>ملاحظات المعلم أو شروط إضافية (اختياري)</label><textarea id="notes" rows="2" placeholder="مثال: ربطه برؤية 2030 أو تتضمن تجربة عملية"></textarea></div>
+<div id="stuBox"><label>اسم الطالب</label><input id="student"></div>
+<div id="schBox"><label>المدرسة</label><input id="school"></div>
+<div><label>اسم المعلم</label><input id="teacher"></div>
+<div><label>الفصل الدراسي / العام</label><input id="year" value="١٤٤٨هـ"></div>
+</div>
+<div class="row" style="margin-top:16px">
+<button id="gen">✨ صمّم البحث الآن</button>
+<button class="sec" id="test">🔍 فحص الاتصال</button>
+<span id="status"></span>
+</div>
+</section>
+<section class="card" id="histBox" style="display:none"><label>📁 أبحاثي المحفوظة (تُحفظ تلقائياً على جهازك)</label><div id="hist"></div></section>
+<section id="actions" class="card" style="display:none">
+<div class="row">
+<button id="pdf">⬇️ تنزيل PDF</button>
+<button class="sec" id="zin">🔍＋ تكبير</button>
+<button class="sec" id="zout">🔍－ تصغير</button>
+<button class="sec" id="restyle">🎨 تصميم آخر</button>
+<button class="sec" id="regen">🔄 إعادة صياغة بأوامر جديدة</button>
+<span id="pstatus" class="note"></span>
+</div>
+</section>
+<div id="out"></div>
+</main>
+<script>
+const GROQ_API_KEY = "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";
+
+const CUR={
+"الابتدائية":{grades:["الأول","الثاني","الثالث","الرابع","الخامس","السادس"],subjects:["لغتي","الرياضيات","العلوم","الدراسات الإسلامية","الدراسات الاجتماعية","اللغة الإنجليزية","المهارات الرقمية"]},
+"المتوسطة":{grades:["الأول المتوسط","الثاني المتوسط","الثالث المتوسط"],subjects:["لغتي الخالدة","الرياضيات","العلوم","الدراسات الإسلامية","الدراسات الاجتماعية","اللغة الإنجليزية","المهارات الرقمية","التفكير الناقد"]},
+"الثانوية":{grades:["الأول الثانوي","الثاني الثانوي","الثالث الثانوي"],subjects:["اللغة العربية","الرياضيات","الأحياء","الكيمياء","الفيزياء","علم البيئة","التاريخ","الجغرافيا","اللغة الإنجليزية","الدراسات الإسلامية","التقنية الرقمية","التفكير الناقد"]}
+};
+const SIZES={short:{n:6,w:180},mid:{n:8,w:260},long:{n:10,w:340}};
+const $=id=>document.getElementById(id);
+const THEMES=[
+  {n:"أزرق ملكي",pc:"#244B91",pl:"#D7E3F7",pl2:"#EFF4FC",ac:"#D6AA55",dk:"#10213F",c:"b",h:"h-bar",b:"bgt",f:"'El Messiri',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"زمردي فاخر",pc:"#08745D",pl:"#CBE8DD",pl2:"#EDF8F3",ac:"#D7B56D",dk:"#10352E",c:"a",h:"h-under",b:"bgf",f:"'Amiri',serif",bf:"'Almarai',Tahoma,sans-serif"},
+  {n:"ليلي وذهبي",pc:"#25345D",pl:"#DED9C5",pl2:"#F6F2E7",ac:"#C6A45D",dk:"#10182E",c:"h",h:"h-slant",b:"bgr",f:"'Lalezar',serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"تركواز هادئ",pc:"#087E8B",pl:"#C8E8EA",pl2:"#EFF9F9",ac:"#E5A85B",dk:"#12353D",c:"c",h:"h-box",b:"bgt",f:"'Reem Kufi',sans-serif",bf:"'Cairo',Tahoma,sans-serif"},
+  {n:"عنابي ملكي",pc:"#842B45",pl:"#EBD1D9",pl2:"#FBF0F3",ac:"#D7A75D",dk:"#321923",c:"d",h:"h-fill",b:"bgf",f:"'Amiri',serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"بنفسجي مخملي",pc:"#6941A5",pl:"#E2D8F2",pl2:"#F6F1FB",ac:"#D6B36B",dk:"#24183B",c:"e",h:"h-chip",b:"bgr",f:"'El Messiri',sans-serif",bf:"'Almarai',Tahoma,sans-serif"},
+  {n:"أزرق محيطي",pc:"#17608A",pl:"#D0E5F1",pl2:"#F0F7FB",ac:"#E1B45E",dk:"#102D43",c:"f",h:"h-line",b:"bgd",f:"'Cairo',sans-serif",bf:"'Mada',Tahoma,sans-serif"},
+  {n:"زيتوني راقٍ",pc:"#586C32",pl:"#DDE6C9",pl2:"#F4F7EC",ac:"#C99D4A",dk:"#29351D",c:"g",h:"h-under",b:"bgf",f:"'Amiri',serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"طوبي دافئ",pc:"#A4472D",pl:"#F0D7CB",pl2:"#FCF2ED",ac:"#D9A34E",dk:"#42251D",c:"i",h:"h-stripe",b:"bgr",f:"'Lalezar',serif",bf:"'Cairo',Tahoma,sans-serif"},
+  {n:"فضي وفحمي",pc:"#465568",pl:"#D8E0E8",pl2:"#F1F4F7",ac:"#B78D4B",dk:"#202A37",c:"j",h:"h-box",b:"bgs",f:"'Reem Kufi',sans-serif",bf:"'Almarai',Tahoma,sans-serif"},
+  {n:"وردي ناعم",pc:"#A63C70",pl:"#F1D5E4",pl2:"#FCF1F7",ac:"#D6A85D",dk:"#3B1E31",c:"e",h:"h-chip",b:"bgt",f:"'El Messiri',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"أزرق سماوي",pc:"#2676A9",pl:"#D2EAF7",pl2:"#F1F9FD",ac:"#DCA95B",dk:"#17374C",c:"b",h:"h-bar",b:"bgd",f:"'Cairo',sans-serif",bf:"'Mada',Tahoma,sans-serif"},
+  {n:"قهوة وكريمي",pc:"#70513D",pl:"#E8D9CB",pl2:"#F8F2EC",ac:"#C49B5A",dk:"#30251F",c:"f",h:"h-under",b:"bgf",f:"'Amiri',serif",bf:"'Almarai',Tahoma,sans-serif"},
+  {n:"أخضر غابة",pc:"#285C46",pl:"#D0E2D5",pl2:"#F0F6F1",ac:"#C6A05B",dk:"#152D24",c:"a",h:"h-fill",b:"bgs",f:"'Reem Kufi',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"نحاسي أنيق",pc:"#98602C",pl:"#EEDDC7",pl2:"#FAF4EB",ac:"#344C68",dk:"#352719",c:"d",h:"h-slant",b:"bgr",f:"'Lalezar',serif",bf:"'Cairo',Tahoma,sans-serif"},
+  {n:"نيلي كلاسيكي",pc:"#3D438B",pl:"#D9DCF3",pl2:"#F2F2FC",ac:"#C5A45D",dk:"#1D2046",c:"c",h:"h-box",b:"bgt",f:"'Amiri',serif",bf:"'Almarai',Tahoma,sans-serif"},
+  {n:"برقوقي",pc:"#70405E",pl:"#E9D8E4",pl2:"#F8F1F6",ac:"#C8A15C",dk:"#321E2D",c:"h",h:"h-stripe",b:"bgf",f:"'El Messiri',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"},
+  {n:"رملي صحراوي",pc:"#92703C",pl:"#EEE2C9",pl2:"#FBF7EF",ac:"#426A70",dk:"#332A1D",c:"g",h:"h-line",b:"bgs",f:"'Amiri',serif",bf:"'Mada',Tahoma,sans-serif"},
+  {n:"فحمي فاخر",pc:"#343B45",pl:"#D9DDE2",pl2:"#F2F4F6",ac:"#D1AA62",dk:"#15191F",c:"j",h:"h-under",b:"bgd",f:"'Lalezar',serif",bf:"'Cairo',Tahoma,sans-serif"},
+  {n:"ياقوتي",pc:"#9A2940",pl:"#F0D2D8",pl2:"#FCF1F3",ac:"#DDB46D",dk:"#391721",c:"i",h:"h-chip",b:"bgr",f:"'Reem Kufi',sans-serif",bf:"'Almarai',Tahoma,sans-serif"},
+{n:"حبر وورق",pc:"#3b3a36",pl:"#dcd7cc",pl2:"#f5f2ea",c:"d",h:"h-line",b:"bgs",f:"'Lalezar',serif",bf:"'Cairo',Tahoma,sans-serif"},
+{n:"شمس الأصيل",pc:"#b7791f",pl:"#f6e7b8",pl2:"#fdf7e4",c:"a",h:"h-chip",b:"bgt",f:"'Changa',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"},
+{n:"بحر عميق",pc:"#123b5c",pl:"#c9dded",pl2:"#eaf2f9",c:"j",h:"h-stripe",b:"bgd",f:"'El Messiri',sans-serif",bf:"'Mada',Tahoma,sans-serif"},
+{n:"ورد الرمال",pc:"#9a4a3c",pl:"#f2d9cf",pl2:"#fbeee9",c:"f",h:"h-box",b:"bgr",f:"'Amiri',serif",bf:"'Almarai',Tahoma,sans-serif"},
+{n:"ياسمين",pc:"#3f7d5c",pl:"#d6eee2",pl2:"#f1faf5",c:"g",h:"h-under",b:"bgf",f:"'Reem Kufi',sans-serif",bf:"'Cairo',Tahoma,sans-serif"},
+{n:"ليلك",pc:"#6d5a9c",pl:"#e5def4",pl2:"#f6f3fb",c:"h",h:"h-chip",b:"bgd",f:"'Lalezar',serif",bf:"'Changa',Tahoma,sans-serif"},
+{n:"معدن",pc:"#4b5563",pl:"#dfe3e8",pl2:"#f3f5f7",c:"b",h:"h-slant",b:"bggrid",f:"'Changa',sans-serif",bf:"'Almarai',Tahoma,sans-serif"},
+{n:"شفق",pc:"#b84a62",pl:"#f5d6dd",pl2:"#fdf0f3",c:"i",h:"h-bar",b:"bgt",f:"'El Messiri',sans-serif",bf:"'Tajawal',Tahoma,sans-serif"}
+];
+const DESCS={"أزرق ملكي":"أزرق عميق مع عناوين بشريط جانبي، مناسب للعلوم والرياضيات","زمردي فاخر":"أخضر زمردي بأغلفة أنيقة، مناسب للبحوث الشاملة","ليلي وذهبي":"خلفية ليلية بلمسات ذهبية، مناسب للتاريخ والأدب","تركواز هادئ":"تركواز ناعم وعناوين عصرية، مناسب للتقنية والبيئة","عنابي ملكي":"عنابي غامق بعناوين ممتلئة، مناسب للعلوم الإنسانية","بنفسجي مخملي":"بنفسجي هادئ بخلفيات دائرية، مناسب للغة العربية","أزرق محيطي":"أزرق بحري بخطوط مرسومة، مناسب للجغرافيا","زيتوني راقٍ":"زيتوني دافئ يشبه الكتب القديمة، مناسب للتاريخ والدراسات الإسلامية","طوبي دافئ":"طوبي ترابي بعناوين شريطية، مناسب للمواد الاجتماعية","فضي وفحمي":"رمادي معدني بمظهر حديث، مناسب للرياضيات والتقنية","وردي ناعم":"وردي هادئ وخطوط رقيقة، مناسب للمرحلة المتوسطة والابتدائية","أزرق سماوي":"أزرق فاتح منعش، مناسب للإنجليزية والعلوم","قهوة وكريمي":"بني كريمي دافئ، مناسب للمقالات الطويلة","أخضر غابة":"أخضر داكن بحدود سميكة، مناسب للأحياء وعلم البيئة","نحاسي أنيق":"نحاسي بإطار مزدوج، مناسب للفيزياء والكيمياء","نيلي كلاسيكي":"نيلي عميق بأغلفة رسمية، مناسب للبحوث الرسمية","برقوقي":"برقوقي بتدرج ناعم، مناسب للفنون واللغة","رملي صحراوي":"رملي وبرتقالي خفيف، مناسب للجغرافيا والبيئة الصحراوية","فحمي فاخر":"أسود فحمي بلمسة ذهبية، مناسب للعروض الرسمية","ياقوتي":"أحمر ياقوتي جريء، مناسب للمواد التي تحتاج لفت الانتباه","حبر وورق":"حبر أسود على ورق كريمي، أقرب لكراسة مكتوبة يدوياً","شمس الأصيل":"أصفر ذهبي دافئ، مناسب للعروض المدرسية المرحة","بحر عميق":"أزرق داكن بخلفية متدرجة، مناسب للعروض الجريئة","ورد الرمال":"وردي ترابي بأغلفة دائرية، مناسب للمواد الإنسانية","ياسمين":"أخضر فاتح ناعم، مناسب للمرحلة الابتدائية","ليلك":"بنفسجي فاتح بعناوين مستديرة، مناسب للمواد الأدبية","معدن":"رمادي معدني بخطوط حادة، مناسب للتقنية والحاسب","شفق":"وردي شفقي بعناوين شريطية، مناسب للتعبير والفنون"};
+const FONTS_BODY=["'Tajawal',Tahoma,sans-serif","'Cairo',Tahoma,sans-serif","'Almarai',Tahoma,sans-serif","'Mada',Tahoma,sans-serif","'Changa',Tahoma,sans-serif","'Reem Kufi',Tahoma,sans-serif","'El Messiri',Tahoma,sans-serif"];
+const FONTS_TITLE=["'Lalezar',serif","'Amiri',serif","'El Messiri',sans-serif","'Reem Kufi',sans-serif","'Cairo',sans-serif","'Changa',sans-serif","'Almarai',sans-serif","'Mada',sans-serif"];
+const COVERS=['a','b','c','d','e','f','g','h','i','j'];
+const HEADS=['h-line','h-bar','h-fill','h-under','h-box','h-stripe','h-chip','h-slant'];
+const BGS=['','bgf','bgt','bgd','bgs','bgr','bggrid'];
+function genTheme(){ // توليد لوحة متناسقة مع أغلفة وعناوين وخطوط متنوعة
+  const r=Math.random,pk=a=>a[Math.floor(r()*a.length)],R=(a,b)=>Math.floor(a+r()*(b-a+1));
+  const hsl=(hh,ss,ll)=>`hsl(${((hh%360)+360)%360} ${ss}% ${ll}%)`;
+  const h=R(0,359),sat=R(48,82),accentHue=h+pk([145,165,185,-145,-165,35,-35]);
+  return {
+    n:'تصميم '+R(1000,9999),
+    pc:hsl(h,sat,R(27,39)),
+    pl:hsl(h,Math.max(18,sat-22),R(82,89)),
+    pl2:hsl(h,Math.max(12,sat-34),R(94,98)),
+    ac:hsl(accentHue,R(48,76),R(47,61)),
+    dk:hsl(h,R(22,42),R(8,15)),
+    c:pk(COVERS),h:pk(HEADS),b:pk(BGS),
+    f:pk(FONTS_TITLE),bf:pk(FONTS_BODY)
+  };
+}
+const TOBJ=k=>colorMerge((k&&typeof k==='object')?k:THEMES[k]);
+function colorMerge(o){
+  const sel=$('colorSel')?$('colorSel').value:'design';
+  if(!o||sel==='design')return o;
+  const named={'أخضر زمردي':'#0b6b4a','أزرق ملكي':'#1e4fa3','أزرق سماوي':'#0369a1','تركوازي':'#0e7490','بنفسجي':'#6b3fa0','نيلي':'#312e81','عنابي':'#9b1c31','وردي':'#be185d','برتقالي':'#c2410c','ذهبي':'#8a5a14','زيتي':'#4d6b1f','رمادي فحمي':'#2f3e46','بني قهوة':'#5b3a29'};
+  const hex=sel==='custom'?$('customColor').value:(named[sel]||'#0b6b4a');
+  const p=customTheme(hex);
+  return {...o,pc:p.pc,pl:p.pl,pl2:p.pl2,ac:p.ac,dk:p.dk};
+}
+THEMES.forEach((t,i)=>$('theme').insertAdjacentHTML('beforeend',`<option value="${i}">${t.n}</option>`));
+let TH=THEMES[0],curTheme=-1,lastData=null;
+const thStyle=()=>`--pc:${TH.pc};--pl:${TH.pl};--pl2:${TH.pl2};--ac:${TH.ac||'#d9a441'};--dk:${TH.dk||'#14201b'};--pf:${TH.bf||"'Tajawal',Tahoma,sans-serif"}`;
+function hexToHsl(hex){
+  let r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;
+  const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h=0,sx=0;const l=(mx+mn)/2;
+  if(mx!==mn){const d=mx-mn;sx=l>.5?d/(2-mx-mn):d/(mx+mn);h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h*=60}
+  return [h,sx*100,l*100];
+}
+function customTheme(hex){
+  const [h,sx,l]=hexToHsl(hex||'#0b6b4a');
+  const H=Math.round(h),S=Math.round(Math.min(90,Math.max(30,sx))),L=Math.round(Math.min(45,Math.max(18,l)));
+  const hsl=(hh,ss,ll)=>`hsl(${((hh%360)+360)%360} ${ss}% ${ll}%)`;
+  return {n:'تصميم لوني',pc:hsl(H,S,L),pl:hsl(H,Math.max(20,S-20),86),pl2:hsl(H,Math.max(15,S-35),95),ac:hsl(H+150,70,52),dk:hsl(H,30,11),c:'a',h:'h-line',b:'bgt',f:"'Amiri',serif",bf:"'Tajawal',Tahoma,sans-serif"};
+}
+function pickTheme(force,d){
+  const v=$('theme').value;
+  if(v==='ai'&&!force&&d&&d.theme){const k=THEMES.findIndex(t=>t.n===d.theme);if(k>=0)return k}
+  if(v!=='rand'&&v!=='ai'&&!force)return +v;
+  if(Math.random()<0.7)return genTheme();
+  let k;do{k=Math.floor(Math.random()*THEMES.length)}while(k===curTheme&&THEMES.length>1);
+  return k;
+}
+
+function fill(){const c=CUR[$('stage').value];$('grade').innerHTML=c.grades.map(x=>`<option>${x}</option>`).join('');$('subject').innerHTML=c.subjects.map(x=>`<option>${x}</option>`).join('')}
+$('stage').onchange=fill;fill();
+const esc=s=>String(s??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const N=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+let VB='',TEMP=0.7;
+function variationBrief(){ // بصمة فريدة لكل طالب ولكل توليد
+  let h=2166136261;
+  for(const c of ($('student').value+'|'+$('teacher').value+'|'+$('school').value+'|'+Date.now()+'|'+Math.random()))h=Math.imul(h^c.charCodeAt(0),16777619);
+  let a=h>>>0;
+  const rnd=()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296};
+  const pick=l=>l[Math.floor(rnd()*l.length)];
+  const style=pick(['أسلوب تحليلي يربط الأسباب بالنتائج','أسلوب قصصي يبدأ بموقف من الحياة اليومية','أسلوب مقارن يوازن بين جانبين أو أكثر','أسلوب استقصائي يطرح أسئلة ثم يجيب عنها','أسلوب تعليمي مبسط بخطوات متسلسلة','أسلوب حواري كأن المعلم يشرح لزميله','أسلوب وصفي يعتمد على الصور الذهنية']);
+  const angle=pick(['ركّز على التطبيقات العملية','ركّز على التطور التاريخي للفكرة','ركّز على المشكلات والتحديات وحلولها','ركّز على الأمثلة المحلية من المملكة','ركّز على علاقة الموضوع بالحياة اليومية للطالب','ركّز على الأسباب والنتائج','ركّز على المفاهيم الخاطئة الشائعة وتصحيحها']);
+  const opn=pick(['ابدأ المقدمة بسؤال مثير','ابدأ المقدمة بموقف واقعي','ابدأ المقدمة بمعلومة لافتة وصحيحة','ابدأ المقدمة بتعريف موجز ثم اربطه بحياة الطالب']);
+  const struct=pick(['ابنِ الأقسام على تسلسل زمني أو مراحل متتالية','ابنِ الأقسام على تصنيف الموضوع إلى فئات أو أنواع','ابنِ الأقسام على مشكلة ثم أسبابها ثم حلولها','ابنِ الأقسام على أسئلة يجيب عنها كل قسم','ابنِ الأقسام على مقارنة بين مفهومين أو أكثر','ابنِ الأقسام من الفكرة العامة إلى التفاصيل الدقيقة']);
+  const world=pick(['المطبخ','الملعب','المزرعة','السوق','المستشفى','المدرسة','البحر','الصحراء','المكتبة','الحافلة','المصنع','الحديقة','البيت']);
+  const code=(h>>>0).toString(36).toUpperCase();
+  TEMP=0.5+rnd()*0.45;
+  return `\n[تنويع إلزامي لهذا الطالب: ${style}؛ ${angle}؛ ${opn}؛ ${struct}. استوحِ أمثلة الشرح من ${world} كلما أمكن، واكتب عناوين أقسام مبتكرة غير المعتادة، وصياغة مختلفة عن الصياغات الشائعة، مع بقاء كل المعلومات صحيحة. بصمة هذا العمل: ${code}.]`;
+}
+const SKIPK=['layout','img','icon','imgQ','theme','kind'];
+const isEng=()=>/الإنجليزية|English/.test($('subject').value);
+function cleanText(t,eng){ // ينظّف النص من بقايا الأكواد والرموز الغريبة، ويرفض النص التالف
+  let x=String(t==null?'':t);
+  x=x.replace(/```[\s\S]*?```/g,' ').replace(/<[^>]{1,60}>/g,' ').replace(/\*\*|__|`/g,'').replace(/^\s*#+\s*/gm,'').replace(/^\s*[-•*]\s+/,'')
+     .replace(/\\["n]/g,' ').replace(/\b(undefined|null|NaN)\b|\[object Object\]/g,' ')
+     .replace(/^[\s"'{\[,]+/,'').replace(/["'\s,}\]]+$/,function(m){return /[.!؟?)]/.test(m)?m:''});
+  if(/[{}]|=>|<\/|\b(?:function|console|const|import|return)\b|https?:\/\/|"\s*:\s*|",\s*"|\["|"\]/.test(x))return '';
+  if(!eng&&!/[\u0600-\u06FF]/.test(x))return '';
+  const L=(x.match(/[A-Za-z\u0600-\u06FF]/g)||[]).length,la=(x.match(/[A-Za-z]/g)||[]).length;
+  if(!eng&&L>=30&&la/L>0.4)return '';
+  return x.replace(/\s{2,}/g,' ').trim();
+}
+function deepClean(o,k,eng){
+  if(typeof o==='string')return SKIPK.includes(k)?o:cleanText(o,eng);
+  if(Array.isArray(o))return o.map(v=>deepClean(v,k,eng)).filter(v=>!(typeof v==='string'&&!v));
+  if(o&&typeof o==='object'){const r={};for(const q in o)r[q]=deepClean(o[q],q,eng);return r}
+  return o;
+}
+function parseJSON(t){
+  try{return JSON.parse(t)}catch(e){}
+  const m=String(t).match(/\{[\s\S]*\}/);
+  if(m)return JSON.parse(m[0]);
+  throw new Error('رد غير مفهوم من النموذج');
+}
+
+// استدعاء Groq: النموذج الأقوى أولاً ثم الأسرع، مع إعادة المحاولة عند ضغط الطلبات
+let MODELS=null;
+async function getModels(){
+  if(MODELS)return MODELS;
+  const pref=["llama-3.3-70b-versatile","meta-llama/llama-4-scout-17b-16e-instruct","moonshotai/kimi-k2-instruct-0905","llama-3.1-8b-instant","openai/gpt-oss-120b","openai/gpt-oss-20b"];
+  try{
+    const r=await fetch("https://api.groq.com/openai/v1/models",{headers:{Authorization:`Bearer ${GROQ_API_KEY}`}});
+    if(!r.ok)throw new Error('models '+r.status);
+    const ids=(await r.json()).data.map(m=>m.id);
+    const ok=m=>!/whisper|orpheus|guard|tts|allam|compound|qwen/i.test(m);
+    MODELS=[...pref.filter(m=>ids.includes(m)),...ids.filter(m=>ok(m)&&!pref.includes(m))];
+    if(!MODELS.length)throw new Error('لا توجد نماذج متاحة لهذا المفتاح');
+  }catch(e){if(/لا توجد/.test(e.message))throw e;MODELS=pref}
+  return MODELS;
+}
+
+async function groq(messages,max=1800,valid){
+  if(VB&&messages[0]&&messages[0].role==='system')messages=[{...messages[0],content:messages[0].content+VB},...messages.slice(1)];
+  const models=await getModels();
+  let last;
+  for(let round=0;round<2;round++){
+    let rate=false;
+    for(const model of models){
+      for(let a=0;a<3;a++){
+        try{
+          const body={model,messages,temperature:a>0?Math.max(0.3,TEMP-0.25):TEMP,top_p:0.95,max_tokens:/gpt-oss/.test(model)?max+1500:max};
+          if(/gpt-oss/.test(model))body.reasoning_effort="low";
+          if(a%2===0)body.response_format={type:"json_object"};
+          const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{
+            method:"POST",
+            headers:{"Authorization":`Bearer ${GROQ_API_KEY}`,"Content-Type":"application/json"},
+            body:JSON.stringify(body)
+          });
+          if(res.ok){
+            const j=await res.json();
+            try{const pj=parseJSON(j.choices[0].message.content);if(valid&&!valid(pj)){last=new Error('رد غير صالح');continue}return pj}catch(pe){last=pe;continue}
+          }
+          const txt=(await res.text()).slice(0,160);
+          last=new Error('خطأ '+res.status+' ['+model+']: '+txt);
+          if(res.status===429){rate=true;break} // حصة هذا النموذج امتلأت: جرّب نموذجاً آخر
+          if(res.status===400||res.status>=500)continue;
+          break; // 401/403/404: انتقل للنموذج التالي
+        }catch(e){last=e;await sleep(1500)}
+      }
+    }
+    if(rate&&round===0){$('status').textContent='⏳ وصلنا حد الطلبات المؤقت، ننتظر قليلاً…';await sleep(20000)}else break;
+  }
+  throw last||new Error('فشل الاتصال');
+}
+
+const SYS="أنت معلم ومشرف بحوث سعودي خبير. اكتب بالعربية الفصحى السليمة بأسلوب يناسب مستوى الطالب. لا تخترع إحصاءات أو أسماء باحثين أو مراجع أو روابط غير موجودة. ممنوع منعاً باتاً أن تضع داخل أي نص أكواداً أو رموز برمجة أو JSON أو Markdown أو HTML أو روابط أو كلاماً إنجليزياً طويلاً، ولا تكتب أي كلام خارج الـ JSON. أجب بصيغة JSON فقط.";
+
+function norm(b){
+  const arr=x=>Array.isArray(x)?x.map(String):(x?[String(x)]:[]);
+  return {paras:arr(b.paras),bullets:arr(b.bullets),subs:(Array.isArray(b.subs)?b.subs:[]).map(u=>({h:u.h,paras:arr(u.paras),bullets:arr(u.bullets)}))};
+}
+function loadImg(url){return new Promise(res=>{
+  const im=new Image();im.crossOrigin='anonymous';
+  const t=setTimeout(()=>res(null),15000);
+  im.onload=()=>{clearTimeout(t);try{
+    const c=document.createElement('canvas');const r=Math.min(1,900/im.naturalWidth);
+    c.width=Math.round(im.naturalWidth*r);c.height=Math.round(im.naturalHeight*r);
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+    res(c.toDataURL('image/jpeg',0.85));
+  }catch(e){res(url)}};
+  im.onerror=()=>{clearTimeout(t);res(null)};
+  im.src=url;
+})}
+const STOPW=new Set(['the','and','of','in','with','for','on','an','to','from']);
+async function findImage(q,w){ // يبحث بعبارة محددة ويقبل الصورة فقط إذا طابق اسمها كلمات البحث
+  if(/الدراسات الإسلامية|القرآن|التربية الإسلامية|الدين|الفقه|الحديث|التوحيد|السيرة|التفسير/.test($('subject').value+' '+$('topic').value))return null;
+  q=String(q||'').trim();if(!q||$('imgs').value==='none')return null;
+  const words=q.toLowerCase().split(/\s+/).filter(x=>x.length>2&&!STOPW.has(x)).map(x=>x.replace(/s$/,''));
+  if(!words.length)return null;
+  const need=words.length<=3?words.length:Math.ceil(words.length*0.75);
+  try{
+    const u='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=30&gsrsearch='+encodeURIComponent(q+' filetype:bitmap')+'&prop=imageinfo&iiprop=url|mime|size&iiurlwidth='+(w||900);
+    const j=await (await fetch(u)).json();
+    const cand=Object.values((j.query&&j.query.pages)||{}).map(p=>{
+      const ii=p.imageinfo&&p.imageinfo[0];if(!ii)return null;
+      const t=p.title.toLowerCase();
+      return {p,ii,sc:words.filter(x=>t.includes(x)).length};
+    }).filter(c=>c&&/jpeg|png/.test(c.ii.mime)&&(c.ii.width||0)>=400&&!/logo|icon|flag|stub|commons-/i.test(c.p.title)&&c.sc>=need)
+      .sort((a,b)=>b.sc-a.sc||a.p.index-b.p.index);
+    for(const c of cand.slice(0,5)){
+      const src=await loadImg(c.ii.thumburl||c.ii.url);
+      if(src)return {src,title:c.p.title.replace(/^File:/,'').replace(/\.\w+$/,'')};
+    }
+  }catch(e){}
+  return null;
+}
+async function getImages(qs,topic,cap){
+  const want=Math.min(cap||99,{none:0,few:3,mid:6,many:10}[$('imgs').value]);
+  if(!want)return [];
+  qs=(Array.isArray(qs)?qs:[]).map(String).filter(Boolean).slice(0,6);
+  const res=await Promise.all(qs.map(q=>findImage(q)));
+  const seen=new Set(),out=[];
+  res.forEach(r=>{if(r&&!seen.has(r.title)){seen.add(r.title);out.push(r)}});
+  return out.slice(0,want);
+}
+function norm(b){
+  const arr=x=>Array.isArray(x)?x.map(String):(x?[String(x)]:[]);
+  return {paras:arr(b.paras),bullets:arr(b.bullets),subs:(Array.isArray(b.subs)?b.subs:[]).map(u=>({h:u.h,paras:arr(u.paras),bullets:arr(u.bullets)}))};
+}
+function loadImg(url){return new Promise(res=>{
+  const im=new Image();im.crossOrigin='anonymous';
+  const t=setTimeout(()=>res(null),15000);
+  im.onload=()=>{clearTimeout(t);try{
+    const c=document.createElement('canvas');const r=Math.min(1,900/im.naturalWidth);
+    c.width=Math.round(im.naturalWidth*r);c.height=Math.round(im.naturalHeight*r);
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+    res(c.toDataURL('image/jpeg',0.85));
+  }catch(e){res(url)}};
+  im.onerror=()=>{clearTimeout(t);res(null)};
+  im.src=url;
+})}
+async function getImages(qs,topic,cap){
+  const want=Math.min(cap||99,{none:0,few:3,mid:6,many:10}[$('imgs').value]);
+  if(!want)return [];
+  try{
+    qs=(Array.isArray(qs)?qs:[]).map(String).filter(Boolean).slice(0,5);
+    if(!qs.length)qs=[topic];
+    const per=Math.ceil((want+4)/qs.length)+1,seen=new Set();
+    const lists=await Promise.all(qs.map(async q=>{
+      const out=[];
+      try{
+        const u='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch='+encodeURIComponent(q+' filetype:bitmap')+'&prop=imageinfo&iiprop=url|mime|size&iiurlwidth=900';
+        const j=await (await fetch(u)).json();
+        const pages=Object.values((j.query&&j.query.pages)||{}).sort((a,b)=>a.index-b.index);
+        for(const p of pages){
+          const ii=p.imageinfo&&p.imageinfo[0];
+          if(!ii||!/jpeg|png/.test(ii.mime)||(ii.width||0)<500||/logo|icon|flag|stub|commons-/i.test(p.title))continue;
+          out.push({url:ii.thumburl||ii.url,title:p.title.replace(/^File:/,'').replace(/\.\w+$/,'')});
+          if(out.length>=per)break;
+        }
+      }catch(e){}
+      return out;
+    }));
+    const cand=[];
+    for(let k=0;k<per;k++)lists.forEach(l=>{if(l[k]&&!seen.has(l[k].title)){seen.add(l[k].title);cand.push(l[k])}});
+    const loaded=await Promise.all(cand.slice(0,want+5).map(async c=>({title:c.title,src:await loadImg(c.url)})));
+    return loaded.filter(x=>x.src).slice(0,want);
+  }catch(e){return []}
+}
+async function makeResearch(onProgress){
+  const topic=$('topic').value.trim(),subject=$('subject').value,grade=$('grade').value,stage=$('stage').value;
+  const custom=$('customPrompt').value.trim(),notes=$('notes').value.trim();
+  let n,w;
+  const PRE={short:8,mid:12,long:16},sv=$('size').value;
+  const P=sv==='pages'?Math.min(60,Math.max(5,parseInt($('nPages').value)||10)):(PRE[sv]||12);
+  {const T=P-4,k=Math.min(24,Math.max(2,Math.round(T*0.8)));w=Math.min(450,Math.max(80,Math.round(T*240/k)));n=k+2}
+  const ctx=`الموضوع: "${topic}" | المرحلة: ${stage} | الصف: ${grade} | المادة: ${subject}`
+    +(custom?`\nأوامر الطالب (نفّذها حرفياً في العنوان والمحتوى والأسلوب): ${custom}`:'')
+    +(notes?`\nملاحظات المعلم (التزم بها): ${notes}`:'');
+
+  const nb=Math.max(2,n-2);
+  onProgress('🧭 جاري تخطيط هيكل البحث…');
+  const plan=deepClean(await groq([
+    {role:"system",content:SYS},
+    {role:"user",content:`${ctx}\n\nضع خطة بحث من ${nb} أقسام بالضبط، بالترتيب: المقدمة أولاً، ثم أقسام المحتوى المتدرجة من الأساسيات إلى التطبيق والأمثلة. لا تضع الخاتمة ولا المراجع في الخطة لأنهما تُضافان تلقائياً. لكل قسم عنوان محدد (ليس عاماً) وسطر يوضح ما سيغطيه.\nوأضف imgQ: ٤ عبارات بحث قصيرة بالإنجليزية (من ٢ إلى ٤ كلمات) لصور حقيقية تمثل الموضوع مباشرة (أشياء ملموسة يمكن تصويرها وليست مفاهيم مجردة).\nالصيغة: {"title":"عنوان البحث","subtitle":"عنوان فرعي قصير","sections":[{"h":"","focus":""}],"imgQ":["",""],"theme":"اسم تصميم يناسب الموضوع من: ${THEMES.map(t=>t.n).join('، ')}"}`}
+  ],Math.min(7000,600+n*100)),'',isEng());
+  let body=(plan.sections||[]).filter(x=>x&&x.h&&!/خاتمة|المراجع|^مراجع|^المصادر/.test(x.h));
+  if(body.length&&!/مقدمة|تمهيد/.test(body[0].h))body.unshift({h:'المقدمة',focus:'تعريف بالموضوع وأهميته وأهداف البحث'});
+  body=body.slice(0,nb);
+  const secs=[...body,{h:'الخاتمة',focus:'تلخيص أبرز النتائج والتوصيات',kind:'concl'},{h:'المراجع والمصادر',kind:'ref'}];
+  if(body.length<2)throw new Error('تعذّر إنشاء خطة البحث');
+
+  const imgP=getImages(plan.imgQ,topic,1);
+  const heads=secs.map((s,i)=>`${i+1}. ${s.h}`).join('\n');
+  const wantImg={none:0,few:3,mid:6,many:10}[$('imgs').value]||0;
+  const elig=secs.map((x,i)=>i).filter(i=>!secs[i].kind);
+  const mm=wantImg?Math.min(elig.length,wantImg+1):0,FS=new Set();
+  for(let q=0;q<mm;q++)FS.add(elig[Math.min(elig.length-1,Math.floor((q+0.5)*elig.length/mm))]);
+  const FIGNOTE='\nهذا القسم ستُعرض فيه صورة بعد فقرته الأولى: أضف حقلي img وimg2 (كل منهما عبارة إنجليزية بديلة من ٢ إلى ٤ كلمات تصف شيئاً ملموساً محدداً يظهر في الصورة ويرتبط مباشرة بنص هذا القسم، وليس عنوان الموضوع العام)، وحقل cap (وصف عربي للصورة بحد أقصى ١٢ كلمة يربطها بمضمون القسم)، وحقل link (جملة عربية قصيرة تربط الفقرة الأولى بالصورة وتبدأ بـ «يوضح الشكل أدناه»)، وحقل size (الحرف s لصورة بسيطة أو قريبة، m للعادية، l لصورة تحتاج تفاصيل واضحة كمخطط أو منظر واسع).';
+  const done=[];
+  for(let i=0;i<secs.length;i++){
+    onProgress(`✍️ جاري كتابة القسم ${i+1} من ${secs.length}: ${secs[i].h}`);
+    const isRef=secs[i].kind==='ref',isCon=secs[i].kind==='concl';
+    const ask=isRef
+      ?`اذكر 4 إلى 6 مصادر عامة حقيقية ومعروفة يمكن للطالب الرجوع إليها (كتاب الطالب المقرر لمادة ${subject} للصف ${grade}، منصة عين التعليمية، الموسوعات العربية الموثوقة، المواقع الرسمية للجهات المعنية بالموضوع). لا تذكر روابط أو مؤلفين غير متأكد منهم.\nالصيغة: {"bullets":["",""]}`
+      :isCon?`اكتب خاتمة البحث بحوالي ${Math.min(220,Math.round(w*0.8))} كلمة: لخّص أبرز ما ورد في الأقسام السابقة بأسلوبك دون نسخ، واذكر أهم النتائج والتوصيات، وأنهِها بجملة ختامية وشكر لله تعالى. ملخص ما كُتب في الأقسام:\n${done.join('\n')}\nالصيغة: {"paras":["فقرة","فقرة"],"bullets":["نتيجة أو توصية"]}`
+      :`اكتب نص القسم بحوالي ${w} كلمة، بفقرات متماسكة وأمثلة مناسبة للصف ${grade}، دون تكرار ما تغطيه الأقسام الأخرى، ودون كتابة عنوان القسم نفسه داخل النص. يمكنك إضافة عنوان فرعي أو اثنين وقائمة نقاط عند الحاجة.\n${FS.has(i)?FIGNOTE:''}\nالصيغة: {"paras":["فقرة","فقرة"],"subs":[{"h":"عنوان فرعي","paras":[""],"bullets":[""]}],"bullets":[]${FS.has(i)?',"img":"","cap":"","link":"","size":"m","img2":""':''}}`;
+    let body;
+    try{body=await groq([
+      {role:"system",content:SYS},
+      {role:"user",content:`${ctx}\nعنوان البحث: ${plan.title}\nأقسام البحث:\n${heads}\n\nالقسم المطلوب الآن: "${secs[i].h}" — ${secs[i].focus||''}\n${ask}`}
+    ],Math.max(1800,Math.round(w*3.5)),b=>{const n=norm(deepClean(b,'',isEng()));return n.paras.length||n.bullets.length||n.subs.some(u=>u.paras.length)});}catch(err){body={paras:['تعذّر توليد هذا القسم ('+err.message+'). أعد تصميم البحث.']}}
+    Object.assign(secs[i],norm(deepClean(body,'',isEng())));
+    if(FS.has(i)){const ex=deepClean({cap:body.cap,link:body.link},'',isEng());secs[i].cap=ex.cap;secs[i].link=ex.link;secs[i].size=/^[sml]$/.test(body.size)?body.size:'m';secs[i].imgQ2=String(body.img2||'').replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim();secs[i].imgQ=String(body.img||'').replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim()}
+    if(!isRef&&!isCon&&secs[i].paras[0])done.push(secs[i].h+': '+secs[i].paras[0].slice(0,200));
+  }
+  onProgress('🖼️ جاري تجهيز الصور…');
+  await Promise.all([...FS].map(async i=>{
+    const f=await findImage(secs[i].imgQ)||await findImage(secs[i].imgQ2);
+    if(f){secs[i].fig={src:f.src,title:f.title,cap:secs[i].cap||'',size:secs[i].size||'m'};if(secs[i].link&&secs[i].paras[0])secs[i].paras[0]+=' '+secs[i].link}
+  }));
+  let kept=0;[...FS].forEach(i=>{if(secs[i].fig){if(++kept>Math.max(0,wantImg-1))secs[i].fig=undefined}});
+  const images=await imgP;
+  return {title:plan.title||topic,subtitle:plan.subtitle,sections:secs,images,theme:plan.theme,targetPages:P||undefined};
+}
+
+// ===== التصفح والترقيم =====
+let FIG={},CREDITS='';
+const figHTML=(f,si)=>`<figure class="fig"><img src="${f.src}" style="height:${SZ(f.size).fh}px" crossorigin="anonymous"><figcaption>شكل (${N(f.k)}) — ${f.cap?esc(f.cap):'صورة توضيحية مرتبطة بموضوع «'+esc(DATA_SECS[si].h)+'»'}</figcaption></figure>`;
+let DATA_SECS=[];
+function blocksOf(s,si){
+  const out=[{html:`<h2>${esc(s.h)}</h2>`,head:true,sec:si}];
+  const isRef=s.kind==='ref';
+  (s.paras||[]).forEach((p,pi)=>{out.push({html:`<p>${esc(p)}</p>`});if(pi===0&&FIG[si])out.push({html:figHTML(FIG[si],si)})});
+  if(!(s.paras||[]).length&&FIG[si])out.push({html:figHTML(FIG[si],si)});
+  const list=(b)=>(b||[]).length?[{html:(isRef?'<ol>':'<ul>')+b.map(x=>`<li>${esc(x)}</li>`).join('')+(isRef?'</ol>':'</ul>')}]:[];
+  out.push(...list(s.bullets));
+  if(isRef&&CREDITS)out.push({html:`<p style="font-size:14px">${CREDITS}</p>`});
+  (s.subs||[]).forEach(u=>{
+    if(u.h)out.push({html:`<h3>${esc(u.h)}</h3>`,head:true});
+    (u.paras||[]).forEach(p=>out.push({html:`<p>${esc(p)}</p>`}));
+    out.push(...list(u.bullets));
+  });
+  return out;
+}
+
+const SZMAP={s:{fh:150,ci:42,top:90},m:{fh:230,ci:56,top:120},l:{fh:340,ci:84,top:170}};
+const SZ=k=>SZMAP[k]||SZMAP.m; // الحجم يحدده الذكاء لكل صورة
+function render(d,th){
+  const o=$('out'),P=d.targetPages;
+  const set=(k,l)=>{o.style.setProperty('--k',k);o.style.setProperty('--lh',l)};
+  set(1,2);
+  if(!P){render0(d,th);return}
+  const cnt=()=>o.querySelectorAll('.page').length;
+  const run=(x,k,l)=>{set(k,l);render0(x,th);return cnt()};
+  const dd={...d,images:[...(d.images||[])],sections:d.sections.map(s=>({...s,paras:[...(s.paras||[])],subs:(s.subs||[]).map(u=>({...u,paras:[...(u.paras||[])]}))}))};
+  let lo=0.7,hi=1.3,best=0;
+  for(let i=0;i<7;i++){const m=(lo+hi)/2;if(run(dd,m,2)<=P){best=m;lo=m}else hi=m}
+  if(!best){ // أطول من المطلوب حتى بأصغر خط: احذف الصور الداخلية ثم آخر الفقرات
+    dd.images=dd.images.slice(0,1);
+    for(let g=0;run(dd,0.7,2)>P&&g<60;g++){
+      const c=dd.sections.filter(s=>!s.kind).map(s=>({s,n:s.paras.length+s.subs.reduce((a,u)=>a+u.paras.length,0)})).sort((a,b)=>b.n-a.n)[0];
+      if(!c||c.n<=1)break;
+      const sub=[...c.s.subs].reverse().find(u=>u.paras.length);
+      if(sub)sub.paras.pop();else c.s.paras.pop();
+    }
+  }else{ // أقصر من المطلوب: وسّع التباعد حتى تمتلئ الصفحات
+    let bl=2;
+    if(run(dd,best,2)<P){for(let l=2.1;l<=3.2;l+=0.1){if(run(dd,best,l)<=P)bl=l;else break}}
+    run(dd,best,bl);
+  }
+}
+function render0(d,th){TH=th||TH;
+  const imgs=d.images||[];FIG={};DATA_SECS=d.sections;
+  const hasFig=d.sections.some(s=>s.fig);const inl=hasFig?[]:imgs.slice(1);
+  const E=d.sections.map((s,i)=>i).filter(i=>!d.sections[i].kind);
+  const m=Math.min(inl.length,E.length);
+  for(let k=0;k<m;k++)FIG[E[Math.min(E.length-1,Math.floor((k+0.5)*E.length/m))]]={...inl[k],k:k+1};
+  if(hasFig){let kk=0;d.sections.forEach((s,i)=>{if(s.fig)FIG[i]={...s.fig,k:++kk}})}
+  CREDITS=(imgs.length||hasFig)?'الصور المستخدمة مأخوذة من ويكيميديا كومنز، وهي مرخّصة ترخيصاً حراً وحقوقها محفوظة لأصحابها.':'';
+  const out=$('out');out.innerHTML='';
+  const meta=[["الطالب",$('student').value],["الصف",$('grade').value],["المادة",$('subject').value],["المعلم",$('teacher').value],["المدرسة",$('school').value],["العام الدراسي",$('year').value]].filter(r=>r[1]&&!d.noMeta);
+  out.insertAdjacentHTML('beforeend',`<div class="page cover cv-${TH.c} ${TH.h} ${imgs[0]?'hasimg':''}" style="${thStyle()}"><div class="top">${d.noMeta?'':'المملكة العربية السعودية<br>وزارة التعليم<br>'+esc($('school').value)}</div>${imgs[0]?`<img class="hero" src="${imgs[0].src}" crossorigin="anonymous">`:''}<div class="ttl" style="font-family:${TH.f}">${esc(d.title)}</div><div class="sub">${esc(d.noMeta?(d.subtitle||''):(d.subtitle||'بحث في مادة '+$('subject').value))}</div><table>${meta.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}</table></div>`);
+
+  const newPage=()=>{const p=document.createElement('div');p.className='page body '+TH.h+' '+(TH.b||'');p.setAttribute('style',thStyle());out.appendChild(p);return p};
+  let page=newPage();
+  const startPage=[];
+  d.sections.forEach((s,si)=>{
+    blocksOf(s,si).forEach(b=>{
+      if(b.sec!==undefined&&s.kind&&page.children.length>0)page=newPage(); // الخاتمة والمراجع كلٌّ في ورقة مستقلة
+      const el=document.createElement('div');el.innerHTML=b.html;
+      const node=el.firstElementChild;
+      page.appendChild(node);
+      if(page.scrollHeight>page.clientHeight+1 && page.children.length>1){
+        page.removeChild(node);
+        const moved=[node];
+        const prev=page.lastElementChild;
+        if(prev&&/^H[23]$/.test(prev.tagName)&&page.children.length>1){page.removeChild(prev);moved.unshift(prev)}
+        page=newPage();moved.forEach(m=>page.appendChild(m));
+      }
+      if(b.sec!==undefined)startPage[si]=null; // تحديد لاحقاً
+      if(b.sec!==undefined)startPage[si]=page;
+    });
+  });
+  const pagesEls=[...out.querySelectorAll('.page')];
+  const total=pagesEls.length+1; // + صفحة الفهرس
+  pagesEls.forEach((p,i)=>{if(i>0)p.insertAdjacentHTML('beforeend',`<div class="fn">${N(i+1)}</div>`)});
+  out.insertAdjacentHTML('beforeend',`<div class="page toc ${TH.h} ${TH.b||''}" style="${thStyle()}"><h2>الفهرس</h2>${d.sections.map((s,i)=>`<div class="it" style="${d.sections.length>14?'padding:3px 0;font-size:15px':''}"><span>${esc(s.h)}</span><span>${N(pagesEls.indexOf(startPage[i])+1)}</span></div>`).join('')}<div class="fn">${N(total)}</div></div>`);
+}
+
+const LAYS=['bullets','compare','stats','quote','steps','cards','image','bigimage','table','section'];
+const SCHEMA=`bullets {"layout":"bullets","title":"","bullets":["٣–٥ نقاط"]}
+compare {"layout":"compare","title":"","left":{"h":"","bullets":[""]},"right":{"h":"","bullets":[""]}}
+stats {"layout":"stats","title":"","stats":[{"v":"قيمة قصيرة معروفة وثابتة","l":"وصف"}]} (٣ عناصر)
+quote {"layout":"quote","title":"","text":"تعريف أو فكرة محورية","note":""}
+steps {"layout":"steps","title":"","steps":[{"h":"","t":""}]} (٣–٥ خطوات)
+cards {"layout":"cards","title":"","cards":[{"h":"","t":""}]} (٣–٦ بطاقات)
+image {"layout":"image","title":"","bullets":["٣ نقاط"]}
+bigimage {"layout":"bigimage","title":"","text":"سطر واحد"}
+table {"layout":"table","title":"","cols":[""],"rows":[[""]]} (حتى ٥ صفوف)
+section {"layout":"section","title":"","text":"سطر"}`;
+const ctxS=()=>`الموضوع: "${$('topic').value.trim()}" | المرحلة: ${$('stage').value} | الصف: ${$('grade').value} | المادة: ${$('subject').value}`+($('customPrompt').value.trim()?`\nأوامر الطالب (نفّذها حرفياً): ${$('customPrompt').value.trim()}`:'')+($('notes').value.trim()?`\nملاحظات المعلم (التزم بها): ${$('notes').value.trim()}`:'');
+
+async function makeSlides(onProgress){
+  const topic=$('topic').value.trim(),ctx=ctxS();
+  let want=parseInt($('nSlides').value)||0;want=want?Math.min(40,Math.max(3,want)):0;
+  onProgress('🧭 جاري تخطيط الشرائح…');
+  const plan=deepClean(await groq([{role:"system",content:SYS},{role:"user",content:`${ctx}\n\nصمّم عرضاً تقديمياً. شريحة الغلاف تُضاف تلقائياً، فاكتب مخطط الشرائح التي بعدها: عددها ${want?'بالضبط '+(want-1):'الذي تراه مناسباً (من ٧ إلى ١٥)'}، وآخرها الخاتمة والتوصيات. اختر لكل شريحة تخطيطاً من: ${LAYS.join(', ')} بتنويع كبير يناسب محتواها، ولا تكرر التخطيط نفسه أكثر من مرتين متتاليتين. وأضف imgQ: ٤ عبارات بحث إنجليزية قصيرة لصور حقيقية من الموضوع، واختر theme مناسباً من: ${THEMES.map(t=>t.n).join('، ')}.\nالصيغة: {"title":"","subtitle":"","theme":"","imgQ":["",""],"outline":[{"t":"عنوان الشريحة","layout":"","focus":"ما تغطيه"}]}`}],Math.min(5000,900+(want||15)*90)),'',isEng());
+  let out=(plan.outline||[]).filter(x=>x&&x.t);
+  if(want){
+    const M=want-1;
+    for(let k=0;out.length<M&&out.length>0&&k<3;k++){
+      const more=await groq([{role:"system",content:SYS},{role:"user",content:`${ctx}\nعناوين الشرائح الحالية: ${out.map(x=>x.t).join(' | ')}\nأضف بالضبط ${M-out.length} شرائح جديدة ومختلفة تكمل العرض دون تكرار. الصيغة: {"outline":[{"t":"","layout":"","focus":""}]}`}],1500);
+      out.splice(out.length-1,0,...(more.outline||[]).filter(x=>x&&x.t).slice(0,M-out.length));
+    }
+    while(out.length&&out.length<M)out.splice(out.length-1,0,{t:'نظرة أعمق في '+topic,layout:'bullets',focus:topic});
+    out=out.slice(0,M);
+  }
+  if(out.length<2)throw new Error('تعذّر تخطيط الشرائح');
+  const last=out[out.length-1];last.layout='bullets';if(!/خاتمة|توصيات/.test(last.t))last.t='الخاتمة والتوصيات';
+  const imgP=getImages(plan.imgQ,topic),slides=[];
+  for(let i=0;i<out.length;i+=5){
+    const part=out.slice(i,i+5);
+    onProgress(`✍️ جاري كتابة الشرائح ${N(i+1)}–${N(i+part.length)} من ${N(out.length)}`);
+    let res={};
+    try{res=deepClean(await groq([{role:"system",content:SYS},{role:"user",content:`${ctx}\nعنوان العرض: ${plan.title}\nكل الشرائح: ${out.map((x,k)=>(k+1)+'. '+x.t).join(' | ')}\n\nاكتب محتوى هذه الشرائح فقط، بالضبط ${part.length} عنصراً وبنفس الترتيب:\n${part.map((x,k)=>`${i+k+1}) "${x.t}" — التخطيط: ${x.layout} — ${x.focus||''}`).join('\n')}\n\nقوالب التخطيطات:\n${SCHEMA}\nقواعد: جمل قصيرة (حتى ١٤ كلمة للنقطة)، لا تخترع أرقاماً أو إحصاءات، لا تكرر.\nالصيغة: {"slides":[{"layout":"","title":""}]}`}],3500),'',isEng())}catch(e){}
+    part.forEach((x,k)=>{const r=(res.slides||[])[k]||{};slides.push({...r,layout:LAYS.includes(r.layout)?r.layout:(LAYS.includes(x.layout)?x.layout:'bullets'),title:r.title||x.t,bullets:r.bullets||(r.layout?undefined:[x.focus||''])})});
+  }
+  onProgress('🖼️ جاري تجهيز الصور…');
+  return {title:plan.title||topic,subtitle:plan.subtitle,theme:plan.theme,slides,images:await imgP};
+}
+
+function slideHTML(s,i,T){
+  const E=esc,pn=`<div class="pn">${N(i+1)} / ${N(T)}</div>`,st=thStyle();
+  const li=a=>`<ul>${(a||[]).map(x=>`<li>${E(x)}</li>`).join('')}</ul>`;
+  const hd=`<div class="bar"></div><div class="hd"><h2>${E(s.title)}</h2></div>`;
+  const wrap=b=>`<div class="slide" style="${st}">${hd}<div class="sb">${b}</div>${pn}</div>`;
+  const cols=n=>`<div class="sg" style="grid-template-columns:repeat(${Math.max(1,Math.min(n,6))},1fr)">`;
+  const L=s.layout;
+  if(L==='section')return `<div class="slide s-sec" style="${st}"><div><h2>${E(s.title)}</h2><p>${E(s.text)}</p></div>${pn}</div>`;
+  if(L==='bigimage'&&s._img)return `<div class="slide" style="${st}"><img class="bg" src="${s._img.src}"><div class="ov"><h2>${E(s.title)}</h2><p>${E(s.text)}</p></div>${pn}</div>`;
+  if(L==='compare')return wrap(`<div class="sg" style="grid-template-columns:1fr 1fr">${[s.left,s.right].map(c=>`<div class="c2"><h3>${E(c&&c.h)}</h3>${li(c&&c.bullets)}</div>`).join('')}</div>`);
+  if(L==='stats'){const a=(s.stats||[]).slice(0,4);return wrap(cols(a.length)+a.map(x=>`<div class="c2 st"><b>${E(x.v)}</b><span>${E(x.l)}</span></div>`).join('')+'</div>')}
+  if(L==='quote')return wrap(`<div class="q">${E(s.text)}<small>${E(s.note)}</small></div>`);
+  if(L==='steps'){const a=(s.steps||[]).slice(0,5);return wrap(cols(a.length)+a.map((x,k)=>`<div class="c2"><i>${N(k+1)}</i><h3>${E(x.h)}</h3><p>${E(x.t)}</p></div>`).join('')+'</div>')}
+  if(L==='cards'){const a=(s.cards||[]).slice(0,6);return wrap(`<div class="sg" style="grid-template-columns:repeat(${a.length>4?3:Math.max(1,Math.min(a.length,3))},1fr)">`+a.map(x=>`<div class="c2"><h3>${E(x.h)}</h3><p>${E(x.t)}</p></div>`).join('')+'</div>')}
+  if(L==='table'&&s.cols)return wrap(`<table class="stb"><tr>${s.cols.map(c=>`<th>${E(c)}</th>`).join('')}</tr>${(s.rows||[]).slice(0,5).map(r=>`<tr>${(Array.isArray(r)?r:[r]).map(c=>`<td>${E(c)}</td>`).join('')}</tr>`).join('')}</table>`);
+  if(L==='image'&&s._img)return wrap(`<div class="sg" style="grid-template-columns:1.2fr 1fr"><div>${li(s.bullets)}</div><img class="si" src="${s._img.src}"></div>`);
+  return wrap(li(s.bullets||(s.text?[s.text]:[])));
+}
+
+function renderSlides(d,th){
+  TH=th||TH;const out=$('out');out.innerHTML='';
+  const im=d.images||[];let ip=1;
+  const sl=d.slides.map(s=>{const c={...s};if((c.layout==='image'||c.layout==='bigimage')&&im[ip])c._img=im[ip++];return c});
+  const T=sl.length+1;
+  const meta=[$('student').value,$('school').value,$('grade').value,$('year').value].filter(Boolean).join(' • ');
+  out.insertAdjacentHTML('beforeend',`<div class="slide s-cover" style="${thStyle()}"><div class="ct"><h1 style="font-family:${TH.f}">${esc(d.title)}</h1><p>${esc(d.subtitle||'')}</p><p>${esc(meta)}</p></div>${im[0]?`<img src="${im[0].src}">`:''}</div>`);
+  sl.forEach((s,i)=>out.insertAdjacentHTML('beforeend',slideHTML(s,i+1,T)));
+  out.querySelectorAll('.sb').forEach(b=>{let f=30;while(b.scrollHeight>b.clientHeight+1&&f>14){f-=2;b.style.fontSize=f+'px'}});
+}
+let ZF=1;
+function fitOut(){const o=$('out');o.style.zoom=1;const w=(lastData&&lastData.kind==='slides')?1280:794;o.style.zoom=Math.min(3,Math.min(1,o.clientWidth/w)*ZF)}
+const renderAny=(d,th)=>{ZF=1;$('out').style.zoom=1;d.kind==='slides'?renderSlides(d,th):d.kind==='summary'?renderSummary(d,th):render(d,th);fitOut()};
+addEventListener('resize',()=>{if(lastData)fitOut()});
+addEventListener('orientationchange',()=>setTimeout(()=>{if(lastData)fitOut()},300));
+function applyMode(){
+  const m=$('mode').value;
+  $('sizeBox').style.display=m==='doc'?'':'none';
+  $('pagesBox').style.display=(m==='doc'&&$('size').value==='pages')?'block':'none';
+  $('slideBox').style.display=m==='slides'?'':'none';
+  $('topicLbl').textContent=m==='sum'?'اسم الدرس':m==='slides'?'موضوع العرض':'موضوع البحث';
+  $('gen').textContent=m==='sum'?'✨ لخّص الدرس الآن':m==='slides'?'✨ صمّم العرض الآن':'✨ صمّم البحث الآن';
+}
+$('acctBtn').onclick=()=>{const b=$('profBox');b.style.display=b.style.display==='none'?'block':'none'};
+$('mode').onchange=applyMode;$('size').onchange=applyMode;
+function hiLightModes(){document.querySelectorAll('.mcard').forEach(b=>b.classList.toggle('on',b.dataset.m===$('mode').value))}
+document.querySelectorAll('.mcard').forEach(b=>b.onclick=()=>{$('mode').value=b.dataset.m;applyMode();hiLightModes()});
+$('mode').addEventListener('change',hiLightModes);
+const UIS={green:['#0b6b4a','#e8f3ee'],blue:['#1e4fa3','#eaf1fc'],purple:['#6b3fa0','#f3edf9'],orange:['#c2410c','#fdeee5'],slate:['#334155','#eef1f5']};
+function applyUI(k){const t=UIS[k]||UIS.green;const r=document.documentElement.style;r.setProperty('--brand',t[0]);r.setProperty('--brand2',t[1])}
+$('uiTheme').value=(()=>{try{return localStorage.getItem('research_ui_v1')||'green'}catch(e){return 'green'}})();
+applyUI($('uiTheme').value);
+$('uiTheme').onchange=()=>{applyUI($('uiTheme').value);try{localStorage.setItem('research_ui_v1',$('uiTheme').value)}catch(e){}};
+const COV_TXT={a:'غلاف بإطار مزدوج مزخرف',b:'غلاف بشريط علوي ملوّن عريض',c:'غلاف بإطار سميك وعنوان داخل مربع',d:'غلاف بشريط جانبي عريض',e:'غلاف بصورة كبيرة في الأعلى عند توفرها',f:'غلاف بصورة دائرية في الوسط',g:'غلاف نصفه ملوّن والنصف الآخر أبيض',h:'غلاف داكن مع جدول ملوّن',i:'غلاف بخطوط مائلة خفيفة',j:'غلاف بإطار سميك وظل داخلي'};
+const HEAD_TXT={'h-line':'عناوين بخط تحتها','h-bar':'عناوين بشريط جانبي','h-fill':'عناوين على خلفية ملوّنة','h-under':'عناوين بخط قصير تحتها','h-box':'عناوين داخل إطار مستدير','h-stripe':'عناوين بشريط عريض بعرض الصفحة','h-chip':'عناوين داخل كبسولات','h-slant':'عناوين بتدرّج لوني وزاوية مائلة'};
+const BG_TXT={'':'ورق أبيض نظيف',bgf:'خلفية بإطار منقّط داخلي',bgt:'خلفية متدرجة ناعمة من الأعلى',bgd:'خلفية منقّطة بنقاط منتظمة',bgs:'خلفية مخططة بخطوط أفقية كالدفتر',bgr:'خلفية بتوهّج لوني في الزاوية',bggrid:'خلفية مخططة بمربعات كورقة الرسم'};
+function describeTheme(t){return `شكل التصميم: ${COV_TXT[t.c]||'غلاف قياسي'}، و${HEAD_TXT[t.h]||'عناوين بسيطة'}، و${BG_TXT[t.b||'']||'ورق أبيض'}.`}
+function showDesc(){
+  const v=$('theme').value;
+  let txt;
+  if(v==='rand')txt='🎲 عشوائي: يُولَّد تصميم جديد كل مرة بتركيب لا يتكرر.';
+  else if(v==='ai')txt='🤖 الذكاء يختار التصميم الأنسب لموضوعك.';
+  else txt=describeTheme(THEMES[+v]);
+  $('themeDesc').textContent=txt;
+  $('customBox').style.display=$('colorSel').value==='custom'?'block':'none';
+}
+$('theme').onchange=showDesc;
+$('colorSel').onchange=()=>{showDesc();if(lastData)renderAny(lastData,TOBJ(curTheme))};
+$('customColor').oninput=()=>{if(lastData)renderAny(lastData,TOBJ(curTheme))};
+hiLightModes();showDesc();
+(()=>{
+  const CLIPS=['bg3.mp4','bg4.mp4','bg5.mp4']; // أفقية فقط: المقاطع الطولية كانت تُقص من الأطراف
+  const EVERY=60; // seconds between clip changes
+  const vids=[...document.querySelectorAll('#animBg .bgv')];
+  if(!vids.length)return;
+  let cur=-1,last=-1;
+  const pick=()=>{let k;do{k=Math.floor(Math.random()*CLIPS.length)}while(k===last&&CLIPS.length>1);last=k;return CLIPS[k]};
+  function show(){
+    const next=cur===0?1:0,v=vids[next],old=cur>=0?vids[cur]:null;
+    const name=pick().replace(/\.mp4$/,'');
+    v.onerror=()=>{if(v.getAttribute('src')&&v.getAttribute('src').endsWith('.webm')){v.src=name+'.mp4';v.play().catch(()=>{})}else v.classList.remove('on')};
+    v.src=name+'.webm';
+    v.play().catch(()=>{});
+    v.classList.add('on');
+    if(old){old.classList.remove('on');setTimeout(()=>{old.pause()},1300)}
+    cur=next;
+    $('animBg').classList.add('has-clips');
+  }
+  show();
+  setInterval(show,EVERY*1000);
+  vids.forEach(v=>v.addEventListener('ended',()=>{if(v.classList.contains('on'))show()}));
+})();
+(()=>{let on=true;try{on=(localStorage.getItem('research_anim_v1')??'1')==='1'}catch(e){}
+$('animToggle').checked=on;document.documentElement.classList.toggle('no-anim',!on);
+$('animToggle').onchange=()=>{const v=$('animToggle').checked;document.documentElement.classList.toggle('no-anim',!v);try{localStorage.setItem('research_anim_v1',v?'1':'0')}catch(e){}}})();
+
+// ===== حفظ الأبحاث =====
+const HK='research_history_v1';let curHistId=null;
+const loadHist=()=>{try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch(e){return []}};
+function saveHist(d,ow){
+  const form={};['stage','grade','subject','size','nSec','wSec','topic','customPrompt','notes','student','teacher','school','year','mode','nSlides','nPages','imgs','theme'].forEach(k=>{const e=$(k);if(e)form[k]=e.value});
+  const item={id:Date.now(),ts:new Date().toLocaleString('ar-SA'),title:d.title,mode:d.kind,theme:curTheme,form,data:JSON.parse(JSON.stringify(d))};
+  let old=loadHist();
+  if(ow&&curHistId&&old.some(x=>x.id===curHistId)){item.id=curHistId;old=old.filter(x=>x.id!==curHistId)}
+  curHistId=item.id;
+  const h=[item,...old].slice(0,20);
+  for(let st=0;st<25;st++){
+    try{localStorage.setItem(HK,JSON.stringify(h));break}
+    catch(e){if(st===0)h.slice(1).forEach(x=>x.data.images=[]);else if(st===1)h[0].data.images=[];else if(h.length>1)h.pop();else break}
+  }
+  showHist();
+}
+function patchHist(){ // حفظ تغيير التصميم على نفس العنصر المفتوح
+  if(!curHistId)return;const h=loadHist(),x=h.find(y=>y.id===curHistId);if(!x)return;
+  x.theme=curTheme;try{localStorage.setItem(HK,JSON.stringify(h))}catch(e){}
+}
+function showHist(){
+  const h=loadHist();$('histBox').style.display=h.length?'block':'none';
+  $('hist').innerHTML=h.map(x=>`<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><span style="flex:1">${x.mode==='slides'?'📊':x.mode==='summary'?'📝':'📄'} <b>${esc(x.title)}</b> <span class="note">${esc(x.ts)}</span></span><button class="sec" data-o="${x.id}">فتح</button><button class="sec" data-d="${x.id}">🗑️</button></div>`).join('');
+}
+$('hist').onclick=async e=>{
+  const o=e.target.dataset.o,dl=e.target.dataset.d;
+  if(dl){try{localStorage.setItem(HK,JSON.stringify(loadHist().filter(x=>String(x.id)!==dl)))}catch(_){}showHist();return}
+  if(!o)return;
+  const x=loadHist().find(y=>String(y.id)===o);if(!x)return;
+  $('stage').value=x.form.stage;fill();
+  Object.entries(x.form).forEach(([k,v])=>{const el=$(k);if(el&&k!=='stage')el.value=v});
+  $('mode').onchange();$('size').onchange();
+  curHistId=x.id;lastData=x.data;curTheme=x.theme;await document.fonts.ready;
+  renderAny(x.data,TOBJ(curTheme));$('actions').style.display='block';$('out').scrollIntoView({behavior:'smooth'});
+};
+showHist();
+
+async function conceptImg(q){const f=await findImage(q,320);return f?f.src:null}
+async function makeSummary(onProgress){
+  const topic=$('topic').value.trim(),ctx=ctxS();
+  onProgress('📝 جاري إعداد ملخص الدرس…');
+  const r=deepClean(await groq([{role:"system",content:SYS},{role:"user",content:`${ctx}\n\nاكتب ملخصاً شارحاً وغنياً بالمعلومات للدرس يملأ ورقة A4 واحدة بخط صغير، بأسلوب واضح يناسب الصف. كثّف المعلومات المفيدة ولا تحشُ بكلام عام. إذا وردت في ملاحظات المعلم نصوص من الدرس فلخّصها هي. لا تخترع أرقاماً أو مصادر.\nconcepts من ٦ إلى ٨ (شرح كل واحد ٣–٤ جمل، ولكل فكرة img وهي عبارة إنجليزية من ٢–٣ كلمات لشيء ملموس يمكن تصويره يمثل الفكرة، وicon وهو إيموجي واحد مناسب)، terms من ٥ إلى ٨، remember من ٥ إلى ٧ نقاط، quiz من ٤ إلى ٥ أسئلة، وtable جدول مقارنة أو تصنيف صغير إن ناسب الدرس (وإلا اتركه فارغاً). وفي imgQ ثلاث عبارات إنجليزية قصيرة لصور حقيقية من الدرس، وفي imgSize اختر s أو m أو l لحجم صف الصور العلوي حسب أهمية الصور لفهم الدرس.\nالصيغة: {"title":"","intro":"٢–٣ جمل تمهيدية","concepts":[{"h":"","t":"","img":"","icon":""}],"terms":[{"w":"","d":"تعريف قصير"}],"table":{"title":"","cols":[""],"rows":[[""]]},"example":"مثال محلول أو تطبيق من الحياة","remember":[""],"quiz":[""],"imgSize":"m","imgQ":["",""],"theme":"اختر من: ${THEMES.map(t=>t.n).join('، ')}"}`}],4500),'',isEng());
+  const A=x=>Array.isArray(x)?x:[];
+  onProgress('🖼️ جاري تجهيز الصور…');
+  let images=await getImages(r.imgQ,topic,3);
+  const cs=A(r.concepts).filter(c=>c&&c.h);
+  onProgress('🖼️ جاري جلب صورة لكل فكرة…');
+  const th=await Promise.all(cs.map(c=>conceptImg(c.img)));
+  const t=r.table;
+  return {title:r.title||topic,intro:String(r.intro||''),concepts:cs.map((c,i)=>({h:String(c.h),t:String(c.t||''),icon:String(c.icon||'').slice(0,4),src:th[i]||null})),useImgs:$('imgs').value!=='none',terms:A(r.terms).filter(t=>t&&t.w).map(t=>({w:String(t.w),d:String(t.d||'')})),table:(t&&A(t.cols).length>1)?{title:String(t.title||''),cols:t.cols.map(String),rows:A(t.rows).slice(0,6).map(x=>A(x).map(String))}:null,example:String(r.example||''),remember:A(r.remember).map(String),quiz:A(r.quiz).map(String),theme:r.theme,imgSize:/^[sml]$/.test(r.imgSize)?r.imgSize:'m',images};
+}
+function sumHTML(d,o){
+  const E=esc,ims=[...(d.images||[]).slice(0,3),{src:mindMap(d),map:1}];
+  const info=[['الطالب',$('student').value],['المدرسة',$('school').value],['المعلم',$('teacher').value],['الصف',$('grade').value],['العام',$('year').value]].filter(x=>x[1]).map(x=>`<span><b>${x[0]}:</b> ${E(x[1])}</span>`).join('');
+  const meta=[$('subject').value].filter(Boolean).join(' • ');
+  return `<div class="page sum ${TH.h} ${TH.b||''}" style="${thStyle()}"><div class="sinfo">${info}</div><div class="sh"><h1 style="font-family:${TH.f}">${E(d.title)}</h1><span>${E(meta)}</span></div><p class="sin">${E(d.intro)}</p><div class="simr">${ims.map(i=>`<img class="sim${i.map?' map':''}" style="height:${o.ih}px" src="${i.src}">`).join('')}</div><div class="scol">${d.concepts.map((c,i)=>`<div class="sbx cpt">${d.useImgs===false?'':c.src?`<img src="${c.src}">`:`<div class="ic">${E(c.icon||'📘')}</div>`}<div><h3>${N(i+1)}. ${E(c.h)}</h3><p>${E(c.t)}</p></div></div>`).join('')}</div>${d.table?`<div class="sbx"><h3>📊 ${E(d.table.title||'جدول')}</h3><table class="stbl"><tr>${d.table.cols.map(c=>`<th>${E(c)}</th>`).join('')}</tr>${d.table.rows.map(r=>`<tr>${r.map(c=>`<td>${E(c)}</td>`).join('')}</tr>`).join('')}</table></div>`:''}<div class="srow"><div class="sbx"><h3>📌 مصطلحات</h3>${d.terms.map(t=>`<p><b>${E(t.w)}:</b> ${E(t.d)}</p>`).join('')}</div>${d.example?`<div class="sbx"><h3>💡 مثال</h3><p>${E(d.example)}</p></div>`:''}</div><div class="rem"><h3>✅ تذكّر</h3><ul>${d.remember.map(x=>`<li>${E(x)}</li>`).join('')}</ul></div>${o.quiz&&d.quiz.length?`<div class="sbx"><h3>❓ اختبر نفسك</h3><ol>${d.quiz.map(q=>`<li>${E(q)}</li>`).join('')}</ol></div>`:''}</div>`;
+}
+function mindMap(d){ // مخطط ذهني يُرسم من أفكار الدرس نفسها (يعمل بدون إنترنت)
+  const pc=TH.pc,pl2=TH.pl2,x=t=>String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const cut=(t,n)=>t.length>n?t.slice(0,n-1)+'…':t;
+  const L=d.concepts.slice(0,6).map(c=>cut(c.h,26));
+  const pos=[[640,38],[640,120],[640,202],[120,38],[120,120],[120,202]];
+  let g='<svg xmlns="http://www.w3.org/2000/svg" width="760" height="240" viewBox="0 0 760 240" direction="rtl" font-family="Tajawal,Tahoma,Arial,sans-serif">';
+  L.forEach((t,i)=>{g+=`<line x1="380" y1="120" x2="${pos[i][0]}" y2="${pos[i][1]}" stroke="${pc}" stroke-width="2" opacity=".5"/>`});
+  g+=`<ellipse cx="380" cy="120" rx="135" ry="42" fill="${pc}"/><text x="380" y="126" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">${x(cut(d.title,34))}</text>`;
+  L.forEach((t,i)=>{const [px,py]=pos[i];g+=`<rect x="${px-100}" y="${py-19}" width="200" height="38" rx="12" fill="${pl2}" stroke="${pc}" stroke-width="2"/><text x="${px}" y="${py+5}" text-anchor="middle" font-size="14" fill="#1b2a23">${x(t)}</text>`});
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(g+'</svg>');
+}
+function renderSummary(d,th){
+  TH=th||TH;const o=$('out');
+  const f=SZ(d.imgSize).top/120;o.style.setProperty('--ci',SZ('m').ci+'px');
+  const cfgs=[{quiz:true,ih:Math.round(120*f)},{quiz:true,ih:Math.round(85*f)},{quiz:false,ih:Math.round(100*f)},{quiz:false,ih:Math.round(75*f)}];
+  const fits=(c,k,dd)=>{o.style.setProperty('--k',k);o.innerHTML=sumHTML(dd,c);const pg=o.firstElementChild;return pg.scrollHeight<=pg.clientHeight+1};
+  const dd={...d,concepts:[...d.concepts]};
+  for(;;){ // الصور ثابتة؛ نصغّر الخط ثم نخفف الأسئلة ثم نقصّ آخر الأفكار
+    for(const c of cfgs)for(let k=1.15;k>=0.7;k=+(k-0.03).toFixed(2))if(fits(c,k,dd))return;
+    if(dd.concepts.length<=4)break;
+    dd.concepts.pop();
+  }
+  fits(cfgs[3],0.7,dd);
+}
+async function gen(ow){
+  if(!$('topic').value.trim()){$('status').innerHTML='<span class="err">اكتب موضوع البحث أولًا</span>';return}
+  VB=variationBrief();
+  $('gen').disabled=$('regen').disabled=true;
+  try{
+    const mv=$('mode').value,slidesMode=mv==='slides';
+    const d=await (slidesMode?makeSlides:mv==='sum'?makeSummary:makeResearch)(t=>$('status').textContent=t);
+    d.kind=slidesMode?'slides':mv==='sum'?'summary':'doc';
+    await document.fonts.ready;
+    lastData=d;curTheme=pickTheme(false,d);renderAny(d,TOBJ(curTheme));saveHist(d,ow===true);updProf();
+    $('actions').style.display='block';
+    $('status').textContent='تم ✅ التصميم: '+TOBJ(curTheme).n+(slidesMode?' — '+N(d.slides.length+1)+' شرائح بالضبط':d.kind==='summary'?' — ورقة واحدة':d.targetPages?' — '+N($('out').querySelectorAll('.page').length)+' صفحة (المطلوب '+N(d.targetPages)+')':' — الفهرس في النهاية');
+    $('out').scrollIntoView({behavior:'smooth'});
+  }catch(e){
+    const net=/fetch|network|load failed/i.test(e.message);
+    $('status').innerHTML='<span class="err">'+(net?'تعذّر الوصول إلى خادم Groq. اضغط «فحص الاتصال» لمعرفة السبب.':'تعذّر إكمال البحث: '+esc(e.message)+' — حاول مرة أخرى.')+'</span>';
+  }
+  $('gen').disabled=$('regen').disabled=false;
+}
+$('test').onclick=async()=>{
+  const st=$('status');st.textContent='جارٍ الفحص…';
+  const where=location.protocol==='file:'?'ملف محلي':location.protocol==='blob:'||location.protocol==='about:'?'معاينة داخلية':location.origin;
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/models',{headers:{Authorization:'Bearer '+GROQ_API_KEY}});
+    st.innerHTML=r.ok?'✅ الاتصال سليم والمفتاح يعمل ('+esc(where)+')':'<span class="err">وصلنا للخادم لكن الرد '+r.status+(r.status===401?' — المفتاح غير صالح أو ملغى':r.status===429?' — تجاوزت حد الطلبات، انتظر قليلاً':'')+'</span>';
+  }catch(e){
+    st.innerHTML='<span class="err">❌ المتصفح لا يصل إلى api.groq.com (التشغيل من: '+esc(where)+'). الأسباب المحتملة: الصفحة مفتوحة داخل معاينة تمنع الاتصال، أو الشبكة/الإضافات تحجب الموقع. جرّب بيانات الجوال أو VPN.</span>';
+  }
+};
+$('restyle').onclick=async()=>{
+  if(!lastData)return;
+  await document.fonts.ready;
+  curTheme=pickTheme(true);renderAny(lastData,TOBJ(curTheme));patchHist();
+  $('pstatus').textContent='تم تغيير التصميم: '+TOBJ(curTheme).n;
+};
+// ===== حسابي =====
+const PK='research_profile_v1';
+const getProf=()=>{try{return JSON.parse(localStorage.getItem(PK)||'null')}catch(e){return null}};
+const setProf=p=>{try{localStorage.setItem(PK,JSON.stringify(p))}catch(e){}};
+function applyProf(){
+  const p=getProf(),on=!!(p&&p.student);
+  $('acctBtn').textContent=on?'👤 '+p.student:'👤 سجّل حسابك';
+  $('profNew').style.display=on?'none':'block';$('profOn').style.display=on?'block':'none';
+  $('stuBox').style.display=$('schBox').style.display=on?'none':'';
+  if(!on)return;
+  $('pHello').textContent='👋 أهلاً '+p.student+(p.school?' — '+p.school:'');
+  $('student').value=p.student;$('school').value=p.school||'';
+  if(p.year)$('year').value=p.year;
+  if(p.stage&&CUR[p.stage]){$('stage').value=p.stage;fill();if(p.grade)$('grade').value=p.grade}
+}
+function updProf(){const p=getProf();if(p){p.stage=$('stage').value;p.grade=$('grade').value;p.year=$('year').value;setProf(p)}}
+$('pSave').onclick=()=>{
+  const n=$('pName').value.trim(),sc=$('pSchool').value.trim();
+  if(!n){alert('اكتب اسمك أولاً');return}
+  setProf({student:n,school:sc,stage:$('stage').value,grade:$('grade').value,year:$('year').value});
+  applyProf();
+};
+$('pEdit').onclick=()=>{const p=getProf()||{};$('pName').value=p.student||'';$('pSchool').value=p.school||'';$('profNew').style.display='block';$('profOn').style.display='none';$('stuBox').style.display=$('schBox').style.display=''};
+$('pOut').onclick=()=>{if(!confirm('تسجيل الخروج؟ سيُطلب منك الاسم والمدرسة من جديد.'))return;try{localStorage.removeItem(PK)}catch(e){}$('student').value=$('school').value='';applyProf()};
+$('pShare').onclick=()=>{
+  const code='PF1:'+btoa(unescape(encodeURIComponent(JSON.stringify(getProf()))));
+  $('codeBox').style.display='flex';$('codeVal').value=code;$('codeVal').select();
+};
+$('codeCopy').onclick=()=>{$('codeVal').select();try{navigator.clipboard.writeText($('codeVal').value)}catch(e){document.execCommand('copy')}$('codeCopy').textContent='تم ✅'};
+$('pRestore').onclick=()=>{
+  try{
+    const t=$('pCode').value.trim().replace(/^PF1:/,'');
+    const p=JSON.parse(decodeURIComponent(escape(atob(t))));
+    if(!p.student)throw 0;
+    setProf(p);applyProf();
+  }catch(e){alert('الرمز غير صحيح، تأكد أنك نسخته كاملاً.')}
+};
+applyProf();
+
+$('zin').onclick=()=>{ZF=Math.min(3,ZF*1.25);fitOut()};
+$('zout').onclick=()=>{ZF=Math.max(0.5,ZF/1.25);fitOut()};
+$('gen').onclick=()=>gen(false);$('regen').onclick=()=>gen(true);
+
+$('pdf').onclick=()=>{
+  if(!lastData){$('pstatus').textContent='لا يوجد بحث لطباعته';return}
+  const SL=lastData.kind==='slides';
+  const out=$('out');
+  out.style.zoom=1; // إلغاء التكبير حتى تخرج الصفحات بحجمها الحقيقي
+  const st=document.createElement('style');
+  st.textContent=`@page{size:${SL?'1280px 720px':'210mm 297mm'};margin:0}`;
+  document.head.appendChild(st);
+  document.body.classList.add('printing');
+  const done=()=>{document.body.classList.remove('printing');st.remove();fitOut();window.removeEventListener('afterprint',done)};
+  window.addEventListener('afterprint',done);
+  setTimeout(()=>window.print(),150);
+  $('pstatus').textContent='في نافذة الطباعة اختر "حفظ كـ PDF" (Save as PDF)';
+};
+</script>
+</body>
+</html>
